@@ -1,0 +1,296 @@
+<!-- ================================================================
+     SECTION 1: BANNER CAROUSEL (full-width, 3 slides, auto-play 5s)
+     ================================================================ -->
+<section class="banner-carousel" aria-label="Banner promocional">
+  <div
+    class="carousel-track"
+    [style.width.%]="banners().length * 100"
+    [style.transform]="'translateX(' + (-currentSlide() * 100 / banners().length) + '%)'"
+  >
+    @for (banner of banners(); track $index) {
+      <div class="carousel-slide" [style.width.%]="100 / banners().length">
+        <img
+          [src]="banner"
+          [alt]="'Banner ' + ($index + 1)"
+          class="carousel-img"
+          [loading]="$index === 0 ? 'eager' : 'lazy'"
+          fetchpriority="high"
+        />
+      </div>
+    }
+  </div>
+
+  <!-- Prev arrow -->
+  <button
+    class="carousel-arrow carousel-arrow--prev"
+    (click)="prevSlide()"
+    aria-label="Slide anterior"
+    type="button"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+  </button>
+
+  <!-- Next arrow -->
+  <button
+    class="carousel-arrow carousel-arrow--next"
+    (click)="nextSlide()"
+    aria-label="Slide siguiente"
+    type="button"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 18 15 12 9 6"/>
+    </svg>
+  </button>
+
+  <!-- Dots -->
+  <div class="carousel-dots" role="tablist" aria-label="Slides del carrusel">
+    @for (banner of banners(); track $index) {
+      <button
+        class="carousel-dot"
+        [class.carousel-dot--active]="currentSlide() === $index"
+        (click)="goToSlide($index)"
+        [attr.aria-label]="'Ir al slide ' + ($index + 1)"
+        [attr.aria-selected]="currentSlide() === $index"
+        role="tab"
+        type="button"
+      ></button>
+    }
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 2: CONCESIONARIOS GRID (3 columns, 4 dealers)
+     ================================================================ -->
+<section class="dealers-section" aria-label="Nuestros Concesionarios">
+  <div class="container-honda">
+    <div class="dealers-grid">
+      @for (dealer of dealers(); track dealer.id) {
+        <article class="dealer-card">
+          <!-- City badge -->
+          <div class="dealer-badge">{{ dealer.city }}</div>
+
+          <!-- Body -->
+          <div class="dealer-body">
+            <!-- Hours -->
+            <p class="dealer-hours">Lunes a viernes: 8am – 8pm</p>
+            <p class="dealer-hours dealer-hours--second">Sábados:9am- 6pm</p>
+
+            <!-- Address -->
+            <p class="dealer-dir-label">Dirección</p>
+            <div class="dealer-address">
+              <svg xmlns="http://www.w3.org/2000/svg" class="dealer-map-icon" viewBox="0 0 384 512" fill="currentColor">
+                <path d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z"/>
+              </svg>
+              <span>{{ dealer.address }}</span>
+            </div>
+
+            <!-- Call -->
+            <a [href]="'tel:+57' + dealer.phone" class="dealer-call-link">
+              <svg xmlns="http://www.w3.org/2000/svg" class="dealer-call-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/>
+              </svg>
+              <span>Llamar ahora</span>
+            </a>
+          </div>
+
+          <!-- WhatsApp footer -->
+          <a
+            [href]="'https://api.whatsapp.com/send?phone=' + dealer.whatsapp + '&text=Hola%2C+me+gustar%C3%ADa+obtener+informaci%C3%B3n+sobre+motos+Honda'"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="dealer-wa-footer"
+          >
+            <div class="dealer-wa-icon-circle">
+              <img src="/images/whatsapp-logo.svg" alt="WhatsApp" class="dealer-wa-svg" />
+            </div>
+            <div class="dealer-wa-text">
+              <span class="dealer-wa-label">Asesor comercial <span class="dealer-wa-online">Online</span></span>
+              <span class="dealer-wa-cta">Necesita ayuda? Contáctenos!</span>
+            </div>
+          </a>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 3: PRODUCT GRID — all 20 products
+     ================================================================ -->
+@defer (on viewport) {
+  <section class="products-section" aria-label="Catálogo de motos Honda">
+    <div class="container-honda">
+      <div class="products-grid">
+        @for (product of products(); track product.id) {
+          <article class="product-card-home">
+            <!-- Novedad badge -->
+            <span class="novedad-badge" aria-label="Novedad">
+              <svg class="novedad-icon" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true">
+                <path d="M216 23.86c0-23.8-30.65-32.77-44.15-13.04C48 191.85 224 200 224 288c0 35.63-29.11 64.46-64.85 63.99-35.17-.45-63.15-29.77-63.15-64.94v-85.51c0-21.7-26.47-32.23-41.43-16.5C27.8 213.16 0 261.33 0 320c0 105.87 86.13 192 192 192s192-86.13 192-192c0-170.29-168-193-168-296.14z"/>
+              </svg>
+              Novedad
+            </span>
+
+            <!-- Image -->
+            <div class="product-card-img-wrap">
+              <img
+                [src]="product.images[0]"
+                [alt]="product.name"
+                class="product-card-img"
+                loading="lazy"
+              />
+            </div>
+
+            <!-- Name -->
+            <h2 class="product-card-name">{{ product.name }}</h2>
+
+            <!-- CTA -->
+            <a [routerLink]="'/product/' + product.slug" class="product-card-btn">
+              Ver Detalles
+            </a>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+} @placeholder {
+  <div class="products-placeholder">
+    <div class="container-honda">
+      <div class="products-placeholder-inner">
+        <div class="spinner"></div>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- ================================================================
+     SECTION 4: FEATURED PRODUCT — "Destacada del mes"
+     ================================================================ -->
+@defer (on viewport) {
+  @if (featured(); as moto) {
+    <section class="featured-section" aria-label="Destacada del mes">
+      <div class="container-honda featured-inner">
+        <!-- Left: floating image -->
+        <div class="featured-img-wrap">
+          <img
+            [src]="moto.images[0]"
+            [alt]="moto.name"
+            class="featured-img featured-float"
+            loading="lazy"
+          />
+        </div>
+
+        <!-- Right: text content card with left red border -->
+        <div class="featured-content">
+          <p class="featured-label">DESTACADA DEL MES</p>
+          <h2 class="featured-title">{{ moto.name }}</h2>
+          <p class="featured-subtitle">Confort Absoluto y Durabilidad Extrema</p>
+
+          <!-- Color dots -->
+          <div class="featured-colors">
+            <span class="featured-colors-label">COLORES</span>
+            <div class="featured-dots">
+              @for (color of featuredColors(); track color.label) {
+                <span
+                  class="featured-dot"
+                  [class.featured-dot--outline]="color.outline"
+                  [style.background-color]="color.outline ? 'transparent' : color.value"
+                  [style.border-color]="color.value"
+                  [attr.aria-label]="color.label"
+                  title="{{ color.label }}"
+                ></span>
+              }
+            </div>
+          </div>
+
+          <!-- CTA button -->
+          <a
+            [routerLink]="'/product/' + moto.slug"
+            class="featured-btn"
+          >
+            Ver Más
+            <svg xmlns="http://www.w3.org/2000/svg" class="featured-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  }
+} @placeholder {
+  <div class="featured-placeholder"></div>
+}
+
+<!-- ================================================================
+     SECTION 5: SERVICES — "Nuestros servicios" with BG images
+     ================================================================ -->
+@defer (on viewport) {
+  <section class="services-section" aria-label="Nuestros servicios">
+    <div class="container-honda">
+      <h2 class="services-title">Nuestros servicios</h2>
+    </div>
+    <div class="services-grid">
+      <!-- Motos -->
+      <div
+        class="service-card"
+        style="background-image: url('/images/Diseno-sin-titulo-2025-12-10T141833.274.png')"
+        aria-label="Servicio: Motos"
+      >
+        <div class="service-overlay">
+          <h3 class="service-name">MOTOS</h3>
+          <a
+            [href]="whatsappUrl('Hola, me gustaría obtener información sobre motos Honda')"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="service-btn"
+          >
+            Contactar
+          </a>
+        </div>
+      </div>
+
+      <!-- Financiación -->
+      <div
+        class="service-card"
+        style="background-image: url('/images/Diseno-sin-titulo-2025-12-10T141918.012.png')"
+        aria-label="Servicio: Financiación"
+      >
+        <div class="service-overlay">
+          <h3 class="service-name">Financiación</h3>
+          <a
+            [href]="whatsappUrl('Hola, me gustaría información sobre planes de financiación')"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="service-btn"
+          >
+            Contactar
+          </a>
+        </div>
+      </div>
+
+      <!-- Accesorios -->
+      <div
+        class="service-card"
+        style="background-image: url('/images/Diseno-sin-titulo-2025-12-10T104134.970.png')"
+        aria-label="Servicio: Accesorios"
+      >
+        <div class="service-overlay">
+          <h3 class="service-name">Accesorios</h3>
+          <a
+            [href]="whatsappUrl('Hola, me gustaría información sobre accesorios Honda')"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="service-btn"
+          >
+            Contactar
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+} @placeholder {
+  <div class="services-placeholder"></div>
+}

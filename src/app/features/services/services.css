@@ -1,0 +1,187 @@
+:host { display: block; }
+
+/* ================================================================
+   HERO BANNER
+   ================================================================ */
+.page-hero {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 120px 0 80px;
+  overflow: hidden;
+}
+
+.page-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(34, 34, 34, 0.7);
+}
+
+.page-hero-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.page-hero-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.page-hero-subtitle {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+  margin: 0;
+  opacity: 0.8;
+}
+
+.page-hero-title {
+  font-family: 'Oxanium', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -2px;
+  text-transform: uppercase;
+}
+
+.page-hero-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  color: #fff;
+}
+
+.page-hero-link {
+  color: #fff;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.page-hero-link:hover {
+  opacity: 1;
+}
+
+.page-hero-sep {
+  opacity: 0.5;
+}
+
+.page-hero-current {
+  opacity: 0.8;
+}
+
+@media (max-width: 767px) {
+  .page-hero {
+    padding: 80px 0 50px;
+  }
+
+  .page-hero-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .page-hero-title {
+    font-size: 36px;
+    letter-spacing: -1.5px;
+  }
+}
+
+/* ================================================================
+   SERVICE CARDS — vertical layout with image + body
+   ================================================================ */
+.services-page-content {
+  padding: 60px 0;
+}
+
+.services-page-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (max-width: 767px) {
+  .services-page-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.service-page-card-wrap {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.service-page-img-wrap {
+  width: 100%;
+  aspect-ratio: 5 / 3;
+  overflow: hidden;
+}
+
+.service-page-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+
+.service-page-card-wrap:hover .service-page-img {
+  transform: scale(1.05);
+}
+
+.service-page-card-body {
+  padding: 24px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.service-page-name {
+  font-family: 'Oxanium', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -1.5px;
+  text-transform: uppercase;
+  color: #222;
+  margin: 0;
+}
+
+.service-page-desc {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  color: #4F4F4F;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.service-page-btn {
+  display: inline-block;
+  background: #D5150D;
+  color: #fff;
+  font-family: 'Oxanium', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  text-transform: capitalize;
+  padding: 10px 36px;
+  border-radius: 4px;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.service-page-btn:hover {
+  background: #B01009;
+  transform: translateY(-2px);
+  color: #fff;
+}

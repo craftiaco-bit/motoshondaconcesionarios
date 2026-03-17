@@ -1,0 +1,49 @@
+<div class="wa-container">
+  <!-- Expanded panel -->
+  @if (expanded()) {
+    <div class="wa-panel animate-slide-up">
+      <div class="wa-panel-header">
+        <p class="wa-panel-name">Asesor comercial</p>
+        <div class="wa-panel-status">
+          <span class="wa-status-dot"></span>
+          <span class="wa-status-text">Online</span>
+        </div>
+      </div>
+      <div class="wa-panel-body">
+        <p class="wa-panel-msg">Necesita ayuda? Contáctenos!</p>
+        <a
+          [href]="site.whatsappUrl()"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="wa-panel-btn"
+        >
+          Iniciar chat
+        </a>
+      </div>
+    </div>
+  }
+
+  <!-- Button row: tooltip + circular button -->
+  <div class="wa-btn-row">
+    @if (!expanded()) {
+      <div class="wa-tooltip">
+        <span class="wa-tooltip-text">Necesita asesoría? <strong>Contáctenos</strong></span>
+      </div>
+    }
+
+    <!-- Circular floating button -->
+    <button
+      (click)="toggle()"
+      class="wa-btn"
+      aria-label="WhatsApp"
+    >
+    @if (expanded()) {
+      <svg xmlns="http://www.w3.org/2000/svg" class="wa-btn-icon-close" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    } @else {
+      <img src="/images/whatsapp-logo.svg" alt="WhatsApp" class="wa-btn-icon" />
+    }
+    </button>
+  </div>
+</div>

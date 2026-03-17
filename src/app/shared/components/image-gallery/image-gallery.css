@@ -1,0 +1,99 @@
+:host {
+  display: block;
+}
+
+/* ================================================================
+   MAIN IMAGE — with zoom on hover
+   ================================================================ */
+.gallery-main {
+  position: relative;
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  overflow: hidden;
+  cursor: crosshair;
+}
+
+.gallery-main-img {
+  width: 100%;
+  display: block;
+  object-fit: contain;
+  aspect-ratio: 600 / 372;
+  background: #fff;
+  transition: opacity 0.2s;
+}
+
+.gallery-main-img--zooming {
+  opacity: 0;
+}
+
+/* Zoom overlay — full-size image positioned by mouse */
+.gallery-zoom-overlay {
+  position: absolute;
+  inset: 0;
+  background-size: 250%;
+  background-repeat: no-repeat;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Zoom icon hint */
+.gallery-zoom-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.gallery-zoom-icon svg {
+  width: 18px;
+  height: 18px;
+  color: #fff;
+}
+
+/* ================================================================
+   THUMBNAILS
+   ================================================================ */
+.gallery-thumbs {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.gallery-thumb {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  border: 2px solid transparent;
+  overflow: hidden;
+  cursor: pointer;
+  background: #fff;
+  padding: 0;
+  transition: border-color 0.2s, opacity 0.2s;
+  opacity: 0.6;
+}
+
+.gallery-thumb:hover {
+  opacity: 0.9;
+}
+
+.gallery-thumb--active {
+  border-color: #D5150D;
+  opacity: 1;
+}
+
+.gallery-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}

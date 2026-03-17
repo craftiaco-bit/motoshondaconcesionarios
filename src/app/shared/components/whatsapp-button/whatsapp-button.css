@@ -1,0 +1,182 @@
+:host { display: contents; }
+
+.wa-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+/* ================================================================
+   BUTTON ROW — tooltip next to button
+   ================================================================ */
+.wa-btn-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ================================================================
+   TOOLTIP — "Necesita asesoría? Contáctenos"
+   ================================================================ */
+.wa-tooltip {
+  background: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  padding: 10px 16px;
+  position: relative;
+  animation: fade-in 0.3s ease;
+}
+
+.wa-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -6px;
+  width: 12px;
+  height: 12px;
+  background: #FFFFFF;
+  transform: translateY(-50%) rotate(45deg);
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.05);
+}
+
+.wa-tooltip-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  color: #222222;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.wa-tooltip-text strong {
+  color: #222222;
+  font-weight: 600;
+}
+
+/* ================================================================
+   EXPANDED PANEL
+   ================================================================ */
+.wa-panel {
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  width: 288px;
+  overflow: hidden;
+}
+
+.wa-panel-header {
+  background: #25D366;
+  color: #FFFFFF;
+  padding: 16px;
+}
+
+.wa-panel-name {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.wa-panel-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.wa-status-dot {
+  width: 8px;
+  height: 8px;
+  background: #90EE90;
+  border-radius: 50%;
+}
+
+.wa-status-text {
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.wa-panel-body {
+  padding: 16px;
+}
+
+.wa-panel-msg {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  color: #4F4F4F;
+  margin: 0 0 12px;
+}
+
+.wa-panel-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: #25D366;
+  color: #FFFFFF;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px;
+  border-radius: 8px;
+  transition: opacity 0.2s;
+}
+
+.wa-panel-btn:hover {
+  opacity: 0.9;
+  color: #FFFFFF;
+}
+
+/* ================================================================
+   CIRCULAR BUTTON
+   ================================================================ */
+.wa-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #25D366;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.wa-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+}
+
+.wa-btn-icon {
+  width: 32px;
+  height: 32px;
+  color: #FFFFFF;
+}
+
+.wa-btn-icon-close {
+  width: 26px;
+  height: 26px;
+  color: #FFFFFF;
+}
+
+/* ================================================================
+   ANIMATIONS
+   ================================================================ */
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.2s ease-out;
+}

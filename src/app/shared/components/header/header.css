@@ -1,0 +1,277 @@
+:host { display: block; }
+
+/* ================================================================
+   ROW 1: TOP BAR — black bg, centered content
+   ================================================================ */
+.topbar {
+  background-color: #000000;
+  padding: 14px 0 15px;
+}
+
+.topbar-inner {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.topbar-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.topbar-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #FFFFFF;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  line-height: 1;
+  transition: color 0.3s;
+}
+
+.topbar-link:hover { color: #FFFFFF; }
+
+.topbar-icon {
+  width: 16px;
+  height: 16px;
+  fill: #FFFFFF;
+}
+
+@media (max-width: 767px) {
+  .topbar { display: none; }
+}
+
+/* ================================================================
+   ROW 2: LOGO BAR — white bg, border-bottom
+   Logo | Search | Ubicación | CTA
+   ================================================================ */
+.logobar {
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #A4A4A440;
+  padding: 0 20px;
+}
+
+.logobar-inner {
+  max-width: 90%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 90px;
+}
+
+/* Left: hamburger + logo */
+.logobar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.hamburger-icon {
+  width: 24px;
+  height: 24px;
+  fill: #D5150D;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  height: 84px;
+  width: auto;
+}
+
+/* Center: search box */
+.logobar-search {
+  flex: 1;
+  max-width: 750px;
+  padding: 0 40px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 16px 24px;
+  border: 1px solid #DDDDDD;
+  border-radius: 4px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  color: #888888;
+  background: #FFFFFF;
+  outline: none;
+  transition: border-color 0.2s;
+  cursor: pointer;
+}
+
+.search-input:focus {
+  border-color: #D5150D;
+}
+
+.search-input::placeholder {
+  color: #888888;
+}
+
+/* Right: ubicación + CTA */
+.logobar-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-shrink: 0;
+}
+
+.ubicacion-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #7C7C7C;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  transition: color 0.3s;
+}
+
+.ubicacion-link:hover { color: #CC0000; }
+
+.ubicacion-icon {
+  width: 14px;
+  height: 14px;
+  fill: #CC0000;
+}
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #D5150D;
+  color: #FFFFFF;
+  font-family: 'Oxanium', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: capitalize;
+  padding: 12px 32px;
+  border-radius: 4px;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+}
+
+.cta-btn:hover {
+  background-color: #B01009;
+  color: #FFFFFF;
+}
+
+/* ================================================================
+   ROW 3: NAV BAR — links left-aligned, hidden on phone
+   ================================================================ */
+.navbar {
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #A4A4A440;
+  padding: 0 20px;
+}
+
+.navbar-inner {
+  max-width: 1050px;
+  margin: 0 auto;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-link {
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.75em;
+  color: #000000;
+  padding: 10px 0;
+  transition: color 0.3s;
+}
+
+.navbar-link:hover,
+.navbar-link.nav-active {
+  color: #D5150D;
+}
+
+/* ================================================================
+   MOBILE SEARCH — visible only on tablet/phone
+   ================================================================ */
+.mobile-search {
+  display: none;
+  padding: 12px 20px;
+  background: #FFFFFF;
+}
+
+/* ================================================================
+   MOBILE MENU
+   ================================================================ */
+.mobile-menu {
+  background-color: #FFFFFF;
+  border-top: 1px solid #A4A4A440;
+}
+
+.mobile-menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 16px 20px;
+}
+
+.mobile-nav-link {
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #222222;
+  padding: 10px 0;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link.nav-active {
+  color: #D5150D;
+  background-color: #D5150D10;
+}
+
+/* ================================================================
+   RESPONSIVE — Tablet (max-width: 1024px)
+   ================================================================ */
+@media (max-width: 1024px) {
+  .topbar { padding: 8px 32px; }
+  .logobar { padding: 16px 32px; }
+
+  .logobar-search { display: none; }
+  .logobar-right { display: none; }
+  .hamburger { display: flex; }
+
+  .navbar { display: none; }
+  .mobile-search { display: block; }
+}
+
+/* ================================================================
+   RESPONSIVE — Phone (max-width: 767px)
+   ================================================================ */
+@media (max-width: 767px) {
+  .logobar { padding: 10px 16px; }
+  .logo-img { height: 40px; }
+  .mobile-search { padding: 8px 16px; }
+}

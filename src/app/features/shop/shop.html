@@ -1,0 +1,30 @@
+<div class="container-honda py-8">
+  <app-breadcrumb [items]="[{ label: 'Tienda' }]" />
+
+  <h1 class="shop-title">Tienda</h1>
+
+  <div class="shop-grid">
+    @for (product of paginatedProducts(); track product.id) {
+      <app-product-card [product]="product" />
+    } @empty {
+      <div class="shop-empty">
+        <p>Cargando productos...</p>
+      </div>
+    }
+  </div>
+
+  <!-- Pagination -->
+  @if (totalPages() > 1) {
+    <nav class="shop-pagination" aria-label="Paginación">
+      @for (page of pages(); track page) {
+        <button
+          (click)="goToPage(page)"
+          class="shop-page-btn"
+          [class.shop-page-btn--active]="currentPage() === page"
+        >
+          {{ page }}
+        </button>
+      }
+    </nav>
+  }
+</div>

@@ -1,0 +1,112 @@
+<div class="product-page">
+  @if (product(); as moto) {
+    <div class="container-honda">
+      <app-breadcrumb [items]="breadcrumbItems()" />
+
+      <!-- Product layout — 50/50 split like original -->
+      <div class="product-detail-grid">
+        <!-- Image gallery -->
+        <app-image-gallery
+          [images]="moto.images"
+          [thumbnails]="moto.thumbnails"
+        />
+
+        <!-- Product info -->
+        <div class="product-info">
+          <h1 class="product-info-title">{{ moto.name }}</h1>
+
+          @if (parsedDescription().subtitle) {
+            <h2 class="product-info-subtitle">{{ parsedDescription().subtitle }}</h2>
+          }
+
+          <p class="product-info-desc">{{ parsedDescription().body }}</p>
+
+          <app-whatsapp-cta />
+        </div>
+      </div>
+
+      <!-- Tabs — WooCommerce style -->
+      <div class="product-tabs">
+        <ul class="product-tabs-header" role="tablist">
+          <li
+            role="presentation"
+            [class.product-tab--active]="activeTab() === 'description'"
+          >
+            <button
+              (click)="activeTab.set('description')"
+              class="product-tab-btn"
+              role="tab"
+              [attr.aria-selected]="activeTab() === 'description'"
+            >
+              Descripción
+            </button>
+          </li>
+          @if (moto.specifications) {
+            <li
+              role="presentation"
+              [class.product-tab--active]="activeTab() === 'specs'"
+            >
+              <button
+                (click)="activeTab.set('specs')"
+                class="product-tab-btn"
+                role="tab"
+                [attr.aria-selected]="activeTab() === 'specs'"
+              >
+                Información adicional
+              </button>
+            </li>
+          }
+        </ul>
+
+        <div class="product-tab-content">
+          @switch (activeTab()) {
+            @case ('description') {
+              <h2 class="tab-heading">Descripción</h2>
+              @if (parsedDescription().subtitle) {
+                <h3 class="tab-subtitle">{{ parsedDescription().subtitle }}</h3>
+              }
+              <p class="tab-body">{{ parsedDescription().body }}</p>
+
+              <div class="tab-wa">
+                <app-whatsapp-cta />
+              </div>
+            }
+            @case ('specs') {
+              @if (moto.specifications) {
+                <table class="specs-table">
+                  @for (entry of moto.specifications | keyvalue; track entry.key) {
+                    <tr>
+                      <th>{{ entry.key }}</th>
+                      <td>{{ entry.value }}</td>
+                    </tr>
+                  }
+                </table>
+              }
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Related products -->
+      @defer (on viewport) {
+        @if (relatedProducts().length > 0) {
+          <section class="related-section">
+            <h2 class="related-title">Productos relacionados</h2>
+            <div class="related-grid">
+              @for (related of relatedProducts(); track related.id) {
+                <app-product-card [product]="related" />
+              }
+            </div>
+          </section>
+        }
+      } @placeholder {
+        <div style="margin-top: 64px; height: 192px;"></div>
+      }
+    </div>
+  } @else {
+    <div class="product-loading">
+      <div class="spinner"></div>
+      <p>Cargando producto...</p>
+    </div>
+  }
+</div>

@@ -1,0 +1,248 @@
+:host { display: block; }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ================================================================
+   PAGE WRAPPER
+   ================================================================ */
+.product-page {
+  padding: 24px 0 0;
+}
+
+/* ================================================================
+   PRODUCT DETAIL GRID — 50/50 split like original
+   ================================================================ */
+.product-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-top: 20px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .product-detail-grid {
+    gap: 24px;
+  }
+}
+
+@media (max-width: 767px) {
+  .product-detail-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+/* ================================================================
+   PRODUCT INFO — right column
+   ================================================================ */
+.product-info {
+  padding: 10px 0;
+}
+
+.product-info-title {
+  font-family: 'Oxanium', sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  color: #D5150D;
+  text-transform: uppercase;
+  margin: 0 0 20px;
+}
+
+@media (max-width: 1024px) {
+  .product-info-title { font-size: 32px; letter-spacing: -1.5px; }
+}
+
+@media (max-width: 767px) {
+  .product-info-title { font-size: 28px; letter-spacing: -1px; }
+}
+
+.product-info-subtitle {
+  font-family: 'Oxanium', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 24px;
+  line-height: 1.2;
+  letter-spacing: -1.5px;
+}
+
+@media (max-width: 1024px) {
+  .product-info-subtitle { font-size: 28px; letter-spacing: -1px; }
+}
+
+@media (max-width: 767px) {
+  .product-info-subtitle { font-size: 24px; }
+}
+
+.product-info-desc {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.75em;
+  color: #4F4F4F;
+  margin: 0 0 32px;
+}
+
+.tab-wa {
+  margin-top: 28px;
+}
+
+/* ================================================================
+   TABS — WooCommerce style
+   ================================================================ */
+.product-tabs {
+  margin-top: 48px;
+}
+
+.product-tabs-header {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid #d1d1d1;
+}
+
+.product-tabs-header li {
+  margin-bottom: -2px;
+}
+
+.product-tab-btn {
+  padding: 12px 24px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: none;
+  cursor: pointer;
+  color: #515151;
+  transition: color 0.2s;
+}
+
+.product-tab-btn:hover {
+  color: #D5150D;
+}
+
+.product-tab--active .product-tab-btn {
+  color: #D5150D;
+  border-bottom-color: #D5150D;
+}
+
+.product-tab-content {
+  padding: 32px 0 40px;
+}
+
+.tab-heading {
+  font-family: 'Oxanium', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 14px;
+  letter-spacing: -0.5px;
+}
+
+.tab-subtitle {
+  font-family: 'Oxanium', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 20px;
+  letter-spacing: -0.5px;
+}
+
+.tab-body {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.75em;
+  color: #4F4F4F;
+  margin: 0;
+}
+
+/* Specifications table */
+.specs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+}
+
+.specs-table tr {
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.specs-table th {
+  text-align: left;
+  font-weight: 600;
+  color: #222;
+  padding: 12px 16px;
+  width: 35%;
+  background: #f9f9f9;
+}
+
+.specs-table td {
+  padding: 12px 16px;
+  color: #4F4F4F;
+}
+
+/* ================================================================
+   RELATED PRODUCTS
+   ================================================================ */
+.related-section {
+  margin-top: 64px;
+  margin-bottom: 40px;
+}
+
+.related-title {
+  font-family: 'Oxanium', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -1px;
+  color: #222;
+  text-transform: uppercase;
+  margin: 0 0 28px;
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 1024px) {
+  .related-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 767px) {
+  .related-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+}
+
+/* ================================================================
+   LOADING STATE
+   ================================================================ */
+.product-loading {
+  padding: 96px 0;
+  text-align: center;
+}
+
+.product-loading .spinner {
+  width: 32px;
+  height: 32px;
+  border: 4px solid #D5150D;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto;
+}
+
+.product-loading p {
+  color: #4F4F4F;
+  margin-top: 16px;
+  font-family: 'Poppins', sans-serif;
+}

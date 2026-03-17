@@ -1,0 +1,145 @@
+@import "tailwindcss";
+
+@theme {
+  /* Honda Brand Colors — from Elementor kit-17 */
+  --color-primary: #D5150D;
+  --color-primary-dark: #B01009;
+  --color-secondary: #006D77;
+  --color-secondary-dark: #005A63;
+  --color-text: #222222;
+  --color-text-light: #4F4F4F;
+  --color-gray: #888888;
+  --color-gray-light: #DDDDDD;
+  --color-gray-bg: #F0F1F7;
+  --color-white: #FFFFFF;
+  --color-dark: #222222;
+  --color-whatsapp: #25D366;
+  --color-honda-red: #CC0000;
+
+  /* Fonts */
+  --font-heading: 'Oxanium', sans-serif;
+  --font-body: 'Poppins', sans-serif;
+}
+
+/* Base Styles — matches Elementor global kit */
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  line-height: 1.75em;
+  font-size: 16px;
+  font-weight: 400;
+  background-color: #FFFFFF;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography — exact Elementor values */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+h1 { font-size: 56px; line-height: 1.107em; letter-spacing: -5px; text-transform: uppercase; }
+h2 { font-size: 48px; line-height: 1.083em; letter-spacing: -3px; }
+h3 { font-size: 40px; line-height: 1.1em;   letter-spacing: -2.5px; }
+h4 { font-size: 32px; line-height: 1.094em; letter-spacing: -2.5px; }
+h5 { font-size: 24px; line-height: 1.083em; letter-spacing: -1px; }
+h6 { font-size: 16px; line-height: 1.375em; letter-spacing: 0.2px; text-transform: capitalize; }
+
+p { margin-block-end: 32px; }
+
+/* Responsive typography — exact Elementor breakpoints */
+@media (max-width: 1024px) {
+  h1 { font-size: 52px; letter-spacing: -2.8px; }
+  h2 { font-size: 38px; letter-spacing: -3px; }
+  h3 { font-size: 30px; }
+  h4 { font-size: 25px; }
+  h5 { font-size: 20px; }
+  h6 { font-size: 14px; }
+}
+
+@media (max-width: 767px) {
+  h1 { font-size: 38px; }
+  h2 { font-size: 30px; }
+  h3 { font-size: 25px; letter-spacing: -2px; }
+  h4 { font-size: 20px; letter-spacing: -1px; }
+  h5 { font-size: 18px; letter-spacing: -0.5px; }
+}
+
+/* Buttons — Elementor global button style */
+button, input[type="button"], input[type="submit"], .btn-honda {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: capitalize;
+  line-height: 1.375em;
+  border-radius: 4px;
+}
+
+/* Inputs — Elementor global */
+input:not([type="button"]):not([type="submit"]),
+textarea,
+.field-textual {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.75em;
+  color: var(--color-text);
+  background-color: #FFFFFF;
+  border: 1px solid var(--color-gray-light);
+  border-radius: 4px;
+  padding: 8px 16px;
+}
+
+input:focus:not([type="button"]):not([type="submit"]),
+textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+/* Labels — Elementor global */
+label {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: capitalize;
+  line-height: 1.375em;
+}
+
+/* Container utility — matches Elementor section-boxed */
+.container-honda {
+  max-width: 1050px;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+@media (max-width: 1024px) {
+  .container-honda { max-width: 1024px; }
+}
+
+@media (max-width: 767px) {
+  .container-honda { max-width: 767px; }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Anchor reset — Elementor global link */
+a {
+  color: var(--color-text);
+  text-decoration: none;
+  font-family: "Helvetica", sans-serif;
+}
+
+a:hover {
+  color: var(--color-text);
+}
+
+/* Utility: page title hidden by default (Elementor pattern) */
+h1.entry-title {
+  display: var(--page-title-display, block);
+}

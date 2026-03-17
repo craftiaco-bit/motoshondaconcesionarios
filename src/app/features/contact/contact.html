@@ -1,0 +1,141 @@
+<!-- Hero banner -->
+<section class="page-hero" style="background-image: url('/images/Diseno-sin-titulo-2025-12-10T141833.274.png')">
+  <div class="page-hero-overlay"></div>
+  <div class="container-honda page-hero-inner">
+    <div class="page-hero-text">
+      <p class="page-hero-subtitle">Contáctanos</p>
+      <h1 class="page-hero-title">Contacto</h1>
+    </div>
+    <div class="page-hero-breadcrumb">
+      <a routerLink="/" class="page-hero-link">Inicio</a>
+      <span class="page-hero-sep">›</span>
+      <span class="page-hero-current">Contacto</span>
+    </div>
+  </div>
+</section>
+
+<div class="container-honda py-8">
+  <div class="contact-grid">
+    <!-- Contact info -->
+    <div>
+      <h5 class="contact-info-heading">Información de contacto</h5>
+      <ul class="contact-list">
+        <li class="contact-list-item">
+          <div class="contact-icon-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" class="contact-icon" viewBox="0 0 384 512" fill="currentColor">
+              <path d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z"/>
+            </svg>
+          </div>
+          <div>
+            <p class="contact-item-label">Dirección</p>
+            <p class="contact-item-text">{{ site.config().address }}</p>
+          </div>
+        </li>
+        <li class="contact-list-item">
+          <div class="contact-icon-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" class="contact-icon" viewBox="0 0 512 512" fill="currentColor">
+              <path d="M497.39 361.8l-112-48a24 24 0 0 0-28 6.9l-49.6 60.6A370.66 370.66 0 0 1 130.6 204.11l60.6-49.6a23.94 23.94 0 0 0 6.9-28l-48-112A24.16 24.16 0 0 0 122.6.61l-104 24A24 24 0 0 0 0 48c0 256.5 207.9 464 464 464a24 24 0 0 0 23.4-18.6l24-104a24.29 24.29 0 0 0-14.01-27.6z"/>
+            </svg>
+          </div>
+          <div>
+            <p class="contact-item-label">Teléfono</p>
+            <a [href]="site.phoneUrl()" class="contact-item-link">{{ site.config().phone }}</a>
+          </div>
+        </li>
+        <li class="contact-list-item">
+          <div class="contact-icon-wrap contact-icon-wrap--whatsapp">
+            <img src="/images/whatsapp-logo.svg" alt="WhatsApp" class="contact-icon contact-icon--whatsapp" />
+          </div>
+          <div>
+            <p class="contact-item-label">WhatsApp</p>
+            <a [href]="site.whatsappUrl()" target="_blank" rel="noopener noreferrer" class="contact-item-link">
+              Enviar mensaje
+            </a>
+          </div>
+        </li>
+      </ul>
+
+      <a
+        [href]="site.whatsappUrl()"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="contact-cta"
+      >
+        Chatea con nosotros
+      </a>
+    </div>
+
+    <!-- Contact form -->
+    <div class="contact-form-panel">
+      @if (submitted()) {
+        <div class="contact-success">
+          <div class="contact-success-icon-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" class="contact-success-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h4>Mensaje enviado</h4>
+          <p class="contact-item-text">Nos pondremos en contacto contigo pronto.</p>
+        </div>
+      } @else {
+        <h5 class="contact-form-heading">Envíanos un mensaje</h5>
+        <form (ngSubmit)="onSubmit()" class="contact-form">
+          <div>
+            <label for="name" class="contact-field-label">Nombre</label>
+            <input
+              id="name"
+              type="text"
+              [ngModel]="formData().name"
+              (ngModelChange)="updateField('name', $event)"
+              name="name"
+              required
+              class="contact-field-input"
+              placeholder="Tu nombre"
+            >
+          </div>
+          <div>
+            <label for="email" class="contact-field-label">Email</label>
+            <input
+              id="email"
+              type="email"
+              [ngModel]="formData().email"
+              (ngModelChange)="updateField('email', $event)"
+              name="email"
+              required
+              class="contact-field-input"
+              placeholder="tu@email.com"
+            >
+          </div>
+          <div>
+            <label for="phone" class="contact-field-label">Teléfono</label>
+            <input
+              id="phone"
+              type="tel"
+              [ngModel]="formData().phone"
+              (ngModelChange)="updateField('phone', $event)"
+              name="phone"
+              class="contact-field-input"
+              placeholder="3001234567"
+            >
+          </div>
+          <div>
+            <label for="message" class="contact-field-label">Mensaje</label>
+            <textarea
+              id="message"
+              [ngModel]="formData().message"
+              (ngModelChange)="updateField('message', $event)"
+              name="message"
+              required
+              rows="4"
+              class="contact-field-input contact-field-textarea"
+              placeholder="¿En qué podemos ayudarte?"
+            ></textarea>
+          </div>
+          <button type="submit" class="contact-submit-btn">
+            Enviar mensaje
+          </button>
+        </form>
+      }
+    </div>
+  </div>
+</div>

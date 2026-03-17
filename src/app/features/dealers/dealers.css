@@ -1,0 +1,120 @@
+:host { display: block; }
+
+.dealers-title { margin-bottom: 32px; }
+
+.dealers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 1024px) {
+  .dealers-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 767px) {
+  .dealers-grid { grid-template-columns: 1fr; }
+}
+
+.dealer-card {
+  background: #FFFFFF;
+  border: 1px solid #DDDDDD;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: box-shadow 0.3s;
+}
+
+.dealer-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.dealer-card-body { padding: 24px; }
+
+.dealer-badge {
+  display: inline-block;
+  background: #D5150D;
+  color: #FFFFFF;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+
+.dealer-name {
+  font-family: 'Oxanium', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -1px;
+  color: #222222;
+  margin-bottom: 12px;
+}
+
+.dealer-info-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  color: #4F4F4F;
+  margin-bottom: 8px;
+}
+
+.dealer-info-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  fill: #CC0000;
+}
+
+.dealer-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.dealer-call-btn {
+  flex: 1;
+  text-align: center;
+  border: 2px solid #CC0000;
+  color: #CC0000;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.dealer-call-btn:hover {
+  background: #CC0000;
+  color: #FFFFFF;
+}
+
+.dealer-whatsapp-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #CC0000;
+  color: #FFFFFF;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: opacity 0.2s;
+}
+
+.dealer-whatsapp-btn:hover { opacity: 0.88; }
+.dealer-whatsapp-btn:hover { color: #FFFFFF; }
+
+.dealer-wa-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}

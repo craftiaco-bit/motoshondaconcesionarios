@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "skills": {
+    "angular-architecture": {
+      "source": "gentleman-programming/gentleman-skills",
+      "sourceType": "github",
+      "computedHash": "a85a381f9f5cab49477993ce1992b138d22262a9f20d2c24ce1fe97ccda5c273"
+    },
+    "angular-core": {
+      "source": "gentleman-programming/gentleman-skills",
+      "sourceType": "github",
+      "computedHash": "41582dbdd9cab7451e94623481cc76aa28f01ccd7d95097ce8115dcb27df2b8b"
+    },
+    "angular-forms": {
+      "source": "gentleman-programming/gentleman-skills",
+      "sourceType": "github",
+      "computedHash": "e65500742a8cbc2b48d1a5ad65a0dd983a9f48898d0df2b273e417247ee98228"
+    },
+    "angular-performance": {
+      "source": "gentleman-programming/gentleman-skills",
+      "sourceType": "github",
+      "computedHash": "315036848c4b231b1c206492e94b2f0f0d29b93c2ef5bc7c86f4d92f92d3d0db"
+    },
+    "neon-postgres": {
+      "source": "neondatabase/agent-skills",
+      "sourceType": "github",
+      "computedHash": "391693eee67001639ab65474df185da3ea5cf9ee4b99badecfd64561113edbb4"
+    },
+    "redis-development": {
+      "source": "redis/agent-skills",
+      "sourceType": "github",
+      "computedHash": "d27174128aebe583d5ca15747389c84e286daed589bfa2b99847392a012719b5"
+    },
+    "resend": {
+      "source": "resend/resend-skills",
+      "sourceType": "github",
+      "computedHash": "aa09d4361ce15515b0370a582ffc785ec979869be90718d22eff47110cc3be36"
+    },
+    "typescript": {
+      "source": "gentleman-programming/gentleman-skills",
+      "sourceType": "github",
+      "computedHash": "1693c0e8bf539e479179332543ac9ba13ab2c2dadb04e1f1e4ae0587040de2a0"
+    }
+  }
+}
