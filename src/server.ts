@@ -46,6 +46,13 @@ app.get('/api/products/:slug', (req, res) => {
 });
 
 /**
+ * Serve Google verification file explicitly (before SSR intercepts it)
+ */
+app.get('/google64309204da2203c4.html', (req, res) => {
+  res.type('text/html').sendFile(join(browserDistFolder, 'google64309204da2203c4.html'));
+});
+
+/**
  * Serve static files from /browser
  */
 app.use(
