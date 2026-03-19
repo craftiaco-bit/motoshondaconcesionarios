@@ -299,5 +299,27 @@
       "https://motoshondaconcesionarios.com/wp-content/uploads/2025/12/8140f68f-7772-4eb4-832c-24ebe396b044-100x100.avif"
     ],
     "id": 20
+  },
+  {
+    "url": "",
+    "slug": "honda-cb125f-20",
+    "name": "HONDA CB125F 2.0",
+    "description": "DescripciónDiseño deportivo y rendimiento excepcionalLa CB125F 2.0 es la moto ideal para quienes buscan un estilo deportivo con la confiabilidad Honda. Su motor eficiente y su diseño aerodinámico la convierten en la compañera perfecta para la ciudad, ofreciendo economía de combustible y una conducción ágil y divertida.Asesor comercialOnlineNecesita ayuda? Contáctenos!",
+    "images": [
+      "/images/products/honda-cb125f-20/cb125f-20-red.jpg",
+      "/images/products/honda-cb125f-20/cb125f-20-blue.jpg",
+      "/images/products/honda-cb125f-20/cb125f-20-black.jpg"
+    ],
+    "id": 21
+  },
+  {
+    "url": "",
+    "slug": "honda-cb125f-dlx-h2",
+    "name": "HONDA CB125F DLX H2",
+    "description": "DescripciónEstilo y tecnología en una sola motoLa CB125F DLX H2 combina un diseño agresivo con tecnología de punta. Su equipamiento premium y acabados de alta calidad la hacen destacar en cualquier recorrido, brindando una experiencia de conducción superior con la potencia y eficiencia que caracterizan a Honda.Asesor comercialOnlineNecesita ayuda? Contáctenos!",
+    "images": [
+      "/images/products/honda-cb125f-dlx-h2/cb125f-dlx-h2-black.jpg"
+    ],
+    "id": 22
   }
 ]
