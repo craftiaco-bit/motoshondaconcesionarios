@@ -46,10 +46,15 @@ app.get('/api/products/:slug', (req, res) => {
 });
 
 /**
- * Serve Google verification file explicitly (before SSR intercepts it)
+ * Serve Google verification files explicitly (before SSR intercepts them)
  */
-app.get('/google64309204da2203c4.html', (req, res) => {
-  res.type('text/html').sendFile(join(browserDistFolder, 'google64309204da2203c4.html'));
+app.get('/google*.html', (req, res, next) => {
+  const filePath = join(browserDistFolder, req.path);
+  if (existsSync(filePath)) {
+    res.type('text/html').sendFile(filePath);
+  } else {
+    next();
+  }
 });
 
 /**
