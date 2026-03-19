@@ -1,5 +1,9 @@
-import { Component, input } from '@angular/core';
+import { Component, input, computed } from '@angular/core';
 import { Certificate } from '../../core/models/certificate.model';
+
+const SIGNATURE_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 100"><g opacity="0.85"><path d="M32 68 C30 58,28 42,38 30 C48 18,56 16,58 28 C60 40,46 52,42 56 C38 60,50 48,62 38 C74 28,78 24,82 32 C86 40,76 50,72 52" fill="none" stroke="%230d0d3b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M72 52 C80 42,92 30,100 34 C108 38,104 48,98 50 C92 52,96 38,108 32 C120 26,126 28,130 36 C134 44,128 50,124 48 C118 44,130 26,142 24 C150 22,156 30,154 38 C152 46,144 48,148 42" fill="none" stroke="%230d0d3b" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M148 42 C156 32,168 26,178 30 C188 34,182 46,176 48 C170 50,180 34,194 28 C204 24,212 28,216 36 C220 44,210 50,206 46 C200 40,218 24,234 26 C246 28,252 36,248 42 C244 48,238 44,244 38 C250 32,260 30,268 34 C276 38,272 46,264 48" fill="none" stroke="%230d0d3b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M56 40 C72 36,96 34,110 36" fill="none" stroke="%230d0d3b" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/><path d="M60 62 C100 58,180 54,260 56 C270 56,274 58,270 60" fill="none" stroke="%230d0d3b" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/><circle cx="270" cy="34" r="1.8" fill="%230d0d3b" opacity="0.6"/><path d="M82 32 C86 30,90 32,92 30" fill="none" stroke="%230d0d3b" stroke-width="0.8" stroke-linecap="round" opacity="0.6"/></g></svg>`;
+
+const SIGNATURE_DATA_URI = `data:image/svg+xml,${SIGNATURE_SVG}`;
 
 @Component({
   selector: 'app-certificate-template',
@@ -50,52 +54,7 @@ import { Certificate } from '../../core/models/certificate.model';
 
       <!-- SIGNATURE -->
       <div class="signature">
-        <!-- Digital signature SVG -->
-        <svg class="sig-svg" viewBox="0 0 320 100" xmlns="http://www.w3.org/2000/svg">
-          <g opacity="0.85">
-            <!-- Main stroke — initial capital with loop -->
-            <path
-              d="M32 68 C30 58, 28 42, 38 30 C48 18, 56 16, 58 28
-                 C60 40, 46 52, 42 56 C38 60, 50 48, 62 38
-                 C74 28, 78 24, 82 32 C86 40, 76 50, 72 52"
-              fill="none" stroke="#0d0d3b" stroke-width="2.4"
-              stroke-linecap="round" stroke-linejoin="round"/>
-            <!-- Middle flow -->
-            <path
-              d="M72 52 C80 42, 92 30, 100 34 C108 38, 104 48, 98 50
-                 C92 52, 96 38, 108 32 C120 26, 126 28, 130 36
-                 C134 44, 128 50, 124 48 C118 44, 130 26, 142 24
-                 C150 22, 156 30, 154 38 C152 46, 144 48, 148 42"
-              fill="none" stroke="#0d0d3b" stroke-width="2.1"
-              stroke-linecap="round" stroke-linejoin="round"/>
-            <!-- Tail with flair -->
-            <path
-              d="M148 42 C156 32, 168 26, 178 30 C188 34, 182 46, 176 48
-                 C170 50, 180 34, 194 28 C204 24, 212 28, 216 36
-                 C220 44, 210 50, 206 46 C200 40, 218 24, 234 26
-                 C246 28, 252 36, 248 42 C244 48, 238 44, 244 38
-                 C250 32, 260 30, 268 34 C276 38, 272 46, 264 48"
-              fill="none" stroke="#0d0d3b" stroke-width="1.8"
-              stroke-linecap="round" stroke-linejoin="round"/>
-            <!-- Crossbar / accent stroke -->
-            <path
-              d="M56 40 C72 36, 96 34, 110 36"
-              fill="none" stroke="#0d0d3b" stroke-width="1.2"
-              stroke-linecap="round" opacity="0.7"/>
-            <!-- Underline flourish -->
-            <path
-              d="M60 62 C100 58, 180 54, 260 56 C270 56, 274 58, 270 60"
-              fill="none" stroke="#0d0d3b" stroke-width="1.4"
-              stroke-linecap="round" opacity="0.5"/>
-            <!-- Dot / ink splash -->
-            <circle cx="270" cy="34" r="1.8" fill="#0d0d3b" opacity="0.6"/>
-            <!-- Pressure variation thin connector -->
-            <path
-              d="M82 32 C86 30, 90 32, 92 30"
-              fill="none" stroke="#0d0d3b" stroke-width="0.8"
-              stroke-linecap="round" opacity="0.6"/>
-          </g>
-        </svg>
+        <img [src]="signatureImg" alt="" class="sig-img" />
         <div class="sig-line"></div>
         <p class="sig-name">{{ data().signerName }}</p>
         <p class="sig-role"><em>{{ data().signerRole }}</em></p>
@@ -254,11 +213,12 @@ import { Certificate } from '../../core/models/certificate.model';
       z-index: 1;
       position: relative;
     }
-    .sig-svg {
+    .sig-img {
       width: 260px;
       height: 80px;
       display: block;
       margin: 0 auto -8px;
+      object-fit: contain;
     }
     .sig-line {
       width: 300px;
@@ -316,4 +276,5 @@ import { Certificate } from '../../core/models/certificate.model';
 })
 export class CertificateTemplate {
   readonly data = input.required<Certificate>();
+  readonly signatureImg = SIGNATURE_DATA_URI;
 }
