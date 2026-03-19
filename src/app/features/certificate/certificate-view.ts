@@ -44,8 +44,8 @@ import { CertificateTemplate } from './certificate-template';
       </div>
 
       <!-- Template -->
-      <div class="bg-gray-100 py-8 print:bg-white print:py-0">
-        <div #templateContainer>
+      <div class="bg-gray-100 py-8 print:bg-white print:py-0 overflow-x-auto">
+        <div #templateContainer class="mx-auto w-fit">
           <app-certificate-template [data]="certificate()!" />
         </div>
       </div>
@@ -109,10 +109,11 @@ export class CertificateView {
     element.style.minHeight = original;
 
     const imgData = canvas.toDataURL('image/jpeg', 0.95);
-    const imgWidth = 210;
+    // Letter landscape: 279.4 × 215.9 mm
+    const imgWidth = 279.4;
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-    const pdf = new jsPDF('p', 'mm', [imgWidth, imgHeight]);
+    const pdf = new jsPDF('l', 'mm', 'letter');
     pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight);
     pdf.save(`certificado-cuenta-${this.certificate()?.personName?.replace(/\s+/g, '-') ?? 'honda'}.pdf`);
   }

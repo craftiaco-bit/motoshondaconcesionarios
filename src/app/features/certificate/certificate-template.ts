@@ -1,311 +1,237 @@
-import { Component, input, inject, signal, effect, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Component, input } from '@angular/core';
 import { Certificate } from '../../core/models/certificate.model';
 
 @Component({
   selector: 'app-certificate-template',
   template: `
     <div class="cert-page" id="certificate-render">
-      <!-- HONDA HEADER BAR -->
-      <div class="header-bar">
-        <div class="header-left">
-          <img src="/Honda_Logo.svg.png" alt="Honda" class="header-honda-logo" />
-          <span class="header-slogan">Come ride with us</span>
-        </div>
-      </div>
-
-      <!-- WATERMARK -->
+      <!-- WATERMARK wing -->
       <div class="watermark">
         <img src="/Honda_Logo.svg.png" alt="" />
       </div>
 
-      <!-- TITLE -->
-      <h1 class="cert-title">CERTIFICADO DE CUENTA</h1>
-
-      <!-- BODY TEXT -->
-      <div class="cert-body">
-        <p class="body-text">
-          <strong>HONDA-SUPER MOTOS,</strong> se permite informar que
-          <strong>{{ data().personName }}</strong> identificado(a) con CC.
-          <strong>{{ data().documentNumber }}</strong> se encuentra encargada y
-          autorizado(a) del área de cartera de la compañía y figura como titular
-          de la cuenta.
-        </p>
-
-        <!-- ACCOUNT INFO -->
-        <div class="account-info">
-          <p><strong>CUENTA:</strong> {{ data().accountBank }}</p>
-          <p><strong>TIPO DE CUENTA:</strong> {{ data().accountType }}</p>
-          <p><strong>No:</strong> {{ data().accountNumber }}</p>
+      <!-- HONDA HEADER BAR -->
+      <div class="header-bar">
+        <div class="header-inner">
+          <img src="/Honda_Logo.svg.png" alt="Honda" class="header-logo" />
+          <span class="header-slogan">Come ride with us</span>
         </div>
       </div>
 
-      <!-- SIGNATURE -->
-      <div class="signature-area">
-        <div class="signature-line"></div>
-        <p class="signer-name">{{ data().signerName }}</p>
-        <p class="signer-role"><em>{{ data().signerRole }}</em></p>
+      <!-- CONTENT -->
+      <div class="content">
+        <!-- TITLE -->
+        <h1 class="cert-title">CERTIFICADO DE CUENTA</h1>
+
+        <!-- BODY CARD -->
+        <div class="body-card">
+          <p class="body-text">
+            <strong>HONDA-SUPER MOTOS,</strong> se permite informar que
+            <strong>{{ data().personName }}</strong>
+            identificado(a) con CC. <strong>{{ data().documentNumber }}</strong>
+            se encuentra encargada y autorizado(a) del área de cartera de la
+            compañía y figura como titular de la cuenta.
+          </p>
+
+          <!-- ACCOUNT DATA -->
+          <div class="account-block">
+            <p class="account-line"><strong>CUENTA:</strong> {{ data().accountBank }}</p>
+            <p class="account-line"><strong>TIPO DE CUENTA:</strong> {{ data().accountType }}</p>
+            <p class="account-line"><strong>No:</strong> {{ data().accountNumber }}</p>
+          </div>
+        </div>
+
+        <!-- SIGNATURE -->
+        <div class="signature-block">
+          <div class="sig-line"></div>
+          <p class="sig-name">{{ data().signerName }}</p>
+          <p class="sig-role"><em>{{ data().signerRole }}</em></p>
+        </div>
       </div>
 
       <!-- FOOTER -->
-      <div class="cert-footer">
-        <div class="footer-left">
-          <div class="gsm-badge">
-            <span class="gsm-text">GSM</span>
-            <span class="gsm-sub">Grupo Supermotos</span>
-          </div>
+      <div class="footer">
+        <div class="footer-gsm">
+          <span class="gsm-text">GSM</span>
+          <span class="gsm-sub">Grupo Supermotos</span>
         </div>
-        <div class="footer-center">
-          <p class="disclaimer">
-            *Importante: este certificado solo hace referencia a los productos
-            mencionados anteriormente.
-          </p>
-        </div>
-      </div>
-
-      <!-- QR -->
-      <div class="qr-area">
-        @if (qrSvg()) {
-          <div class="qr-image" [innerHTML]="qrSvg()"></div>
-          <span class="qr-label">Verificar<br/>certificado</span>
-        }
+        <p class="footer-disclaimer">
+          *Importante: este certificado solo hace referencia a los productos
+          mencionados anteriormente.
+        </p>
       </div>
     </div>
   `,
   styles: `
-    /* ========== RESET ========== */
-    :host .cert-page :is(h1, h2, h3, h4, h5, h6) {
-      letter-spacing: 0;
-      line-height: 1.3;
-      text-transform: none;
-      margin: 0;
+    /* ===== RESET ===== */
+    :host .cert-page :is(h1,h2,h3,h4,h5,h6) {
+      letter-spacing: 0; line-height: 1.3; text-transform: none; margin: 0;
     }
-    :host p { margin-block-end: 0; }
+    :host p { margin: 0; }
 
-    /* ========== PAGE ========== */
+    /* ===== PAGE — Letter landscape 11×8.5in ===== */
     .cert-page {
-      width: 816px;
-      min-height: 1056px;
+      width: 1056px;
+      height: 816px;
       margin: 0 auto;
-      background: #f2f0ed;
+      background: #f0edea;
       font-family: 'Poppins', Arial, sans-serif;
       color: #222;
-      font-size: 16px;
-      line-height: 1.6;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 2px 20px rgba(0,0,0,0.12);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.14);
       position: relative;
       overflow: hidden;
-      padding: 0;
     }
 
-    /* ========== WATERMARK ========== */
+    /* ===== WATERMARK ===== */
     .watermark {
       position: absolute;
-      top: 45%;
-      right: -40px;
+      top: 50%;
+      right: -20px;
       transform: translateY(-50%);
       z-index: 0;
       pointer-events: none;
     }
     .watermark img {
-      width: 480px;
+      width: 520px;
       height: auto;
-      opacity: 0.07;
+      opacity: 0.06;
     }
 
-    /* ========== HEADER BAR ========== */
+    /* ===== HEADER BAR ===== */
     .header-bar {
       background: #D5150D;
-      padding: 16px 40px;
-      display: flex;
-      align-items: center;
+      padding: 14px 48px;
       z-index: 1;
+      flex-shrink: 0;
     }
-    .header-left {
+    .header-inner {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 18px;
     }
-    .header-honda-logo {
-      height: 40px;
+    .header-logo {
+      height: 36px;
       width: auto;
       filter: brightness(0) invert(1);
     }
     .header-slogan {
-      font-family: 'Poppins', sans-serif;
-      font-size: 16px;
+      font-size: 15px;
       font-style: italic;
       color: #fff;
       font-weight: 400;
       letter-spacing: 0.5px;
     }
 
-    /* ========== TITLE ========== */
+    /* ===== CONTENT ===== */
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 0 72px;
+      z-index: 1;
+      position: relative;
+    }
+
+    /* ===== TITLE ===== */
     .cert-title {
       font-family: 'Oxanium', sans-serif;
-      font-size: 46px;
+      font-size: 44px;
       font-weight: 800;
       color: #D5150D;
       text-align: center;
-      margin: 50px 0 40px;
+      margin: 36px 0 32px;
       font-style: italic;
       letter-spacing: 1px;
-      z-index: 1;
-      position: relative;
     }
 
-    /* ========== BODY ========== */
-    .cert-body {
-      flex: 1;
-      padding: 0 70px;
-      z-index: 1;
-      position: relative;
+    /* ===== BODY CARD ===== */
+    .body-card {
+      background: rgba(255,255,255,0.55);
+      border-radius: 6px;
+      padding: 32px 44px;
     }
     .body-text {
-      font-size: 20px;
+      font-size: 19px;
       line-height: 2;
       text-align: justify;
       color: #222;
-      margin: 0 0 40px;
+      margin: 0 0 28px;
     }
 
-    /* ========== ACCOUNT INFO ========== */
-    .account-info {
-      padding-left: 60px;
+    /* ===== ACCOUNT ===== */
+    .account-block {
+      padding-left: 48px;
     }
-    .account-info p {
-      font-size: 20px;
+    .account-line {
+      font-size: 19px;
       font-weight: 700;
       color: #D5150D;
-      margin: 6px 0;
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
-    /* ========== SIGNATURE ========== */
-    .signature-area {
+    /* ===== SIGNATURE ===== */
+    .signature-block {
       text-align: center;
-      margin: 60px 0 30px;
-      z-index: 1;
-      position: relative;
+      margin-top: auto;
+      padding: 28px 0 0;
     }
-    .signature-line {
-      width: 260px;
-      height: 1px;
+    .sig-line {
+      width: 280px;
+      height: 1.5px;
       background: #222;
       margin: 0 auto 6px;
     }
-    .signer-name {
-      font-family: 'Poppins', sans-serif;
-      font-size: 16px;
+    .sig-name {
+      font-size: 15px;
       font-weight: 700;
       color: #222;
-      margin: 0;
     }
-    .signer-role {
-      font-family: 'Poppins', sans-serif;
-      font-size: 14px;
+    .sig-role {
+      font-size: 13px;
       color: #444;
-      margin: 2px 0 0;
+      margin-top: 1px;
     }
 
-    /* ========== FOOTER ========== */
-    .cert-footer {
-      margin-top: auto;
-      padding: 20px 40px 24px;
+    /* ===== FOOTER ===== */
+    .footer {
+      flex-shrink: 0;
+      padding: 16px 48px 20px;
       display: flex;
       align-items: flex-end;
-      gap: 30px;
+      gap: 40px;
       z-index: 1;
       position: relative;
     }
-    .gsm-badge {
+    .footer-gsm {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      flex-shrink: 0;
     }
     .gsm-text {
       font-family: 'Oxanium', sans-serif;
-      font-size: 36px;
+      font-size: 34px;
       font-weight: 900;
       color: #1A3A8F;
       line-height: 1;
       letter-spacing: 1px;
     }
     .gsm-sub {
-      font-family: 'Poppins', sans-serif;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
       color: #D5150D;
-      letter-spacing: 0.3px;
     }
-    .footer-center {
+    .footer-disclaimer {
       flex: 1;
-    }
-    .disclaimer {
-      font-size: 13px;
+      font-size: 12px;
       font-style: italic;
-      color: #555;
+      color: #666;
       text-align: center;
-      margin: 0;
       line-height: 1.5;
-    }
-
-    /* ========== QR ========== */
-    .qr-area {
-      position: absolute;
-      bottom: 20px;
-      right: 30px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-      z-index: 2;
-    }
-    .qr-image { width: 80px; height: 80px; }
-    .qr-image ::ng-deep svg { width: 100%; height: 100%; }
-    .qr-label {
-      font-size: 7px;
-      text-align: center;
-      color: #888;
-      font-weight: 600;
-      text-transform: uppercase;
-      line-height: 1.3;
     }
   `,
 })
 export class CertificateTemplate {
-  private readonly platformId = inject(PLATFORM_ID);
-  private readonly sanitizer = inject(DomSanitizer);
   readonly data = input.required<Certificate>();
-  readonly qrSvg = signal<SafeHtml | null>(null);
-
-  constructor() {
-    effect(() => {
-      const c = this.data();
-      if (c && isPlatformBrowser(this.platformId)) {
-        this.generateQR(c.id);
-      }
-    });
-  }
-
-  private async generateQR(id: string) {
-    try {
-      const mod = await import('qrcode');
-      const toString = mod.toString ?? mod.default?.toString;
-      if (!toString) return;
-      const url = `${window.location.origin}/certi/${id}`;
-      const svg: string = await toString(url, {
-        type: 'svg',
-        width: 160,
-        margin: 1,
-        color: { dark: '#222222', light: '#f2f0ed' },
-      });
-      this.qrSvg.set(this.sanitizer.bypassSecurityTrustHtml(svg));
-    } catch (e) {
-      console.error('QR generation failed:', e);
-    }
-  }
 }
