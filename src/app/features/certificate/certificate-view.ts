@@ -89,35 +89,39 @@ export class CertificateView {
   }
 
   /** Convert ALL images to inline data URLs so html2canvas can render them reliably */
-  private async inlineAllImages(container: HTMLElement): Promise<Array<{ img: HTMLImageElement; originalSrc: string }>> {
+  private async inlineAllImages(container: HTMLElement): Promise<Array<{ img: HTMLImageElement; originalSrc: string; originalFilter?: string }>> {
     const allImages = Array.from(container.querySelectorAll('img'));
-    const restored: Array<{ img: HTMLImageElement; originalSrc: string }> = [];
+    const restored: Array<{ img: HTMLImageElement; originalSrc: string; originalFilter?: string }> = [];
 
     for (const imgEl of allImages) {
-      // Skip images with CSS filters — let html2canvas handle those natively
-      const computedFilter = getComputedStyle(imgEl).filter;
-      if (computedFilter && computedFilter !== 'none') continue;
-
       const originalSrc = imgEl.src;
+      const cssFilter = getComputedStyle(imgEl).filter;
+      const hasFilter = cssFilter && cssFilter !== 'none';
+
       if (originalSrc.startsWith('data:')) {
-        // Already a data URL — draw it via canvas to ensure PNG rasterization
         try {
-          const pngDataUrl = await this.drawImgElToDataUrl(imgEl);
+          const pngDataUrl = await this.drawImgElToDataUrl(imgEl, hasFilter ? cssFilter : undefined);
+          if (hasFilter) imgEl.style.filter = 'none';
           imgEl.src = pngDataUrl;
-          restored.push({ img: imgEl, originalSrc });
+          restored.push({ img: imgEl, originalSrc, originalFilter: hasFilter ? cssFilter : undefined });
         } catch { /* keep original */ }
       } else {
-        // Network/local image — fetch as blob and convert
         try {
-          const pngDataUrl = await this.fetchAsDataUrl(originalSrc);
-          imgEl.src = pngDataUrl;
-          restored.push({ img: imgEl, originalSrc });
-        } catch {
-          // Fallback: try drawing from the already-loaded DOM element
-          try {
-            const pngDataUrl = await this.drawImgElToDataUrl(imgEl);
+          const dataUrl = await this.fetchAsDataUrl(originalSrc);
+          if (hasFilter) {
+            const pngDataUrl = await this.drawDataUrlWithFilter(dataUrl, imgEl, cssFilter);
+            imgEl.style.filter = 'none';
             imgEl.src = pngDataUrl;
-            restored.push({ img: imgEl, originalSrc });
+          } else {
+            imgEl.src = dataUrl;
+          }
+          restored.push({ img: imgEl, originalSrc, originalFilter: hasFilter ? cssFilter : undefined });
+        } catch {
+          try {
+            const pngDataUrl = await this.drawImgElToDataUrl(imgEl, hasFilter ? cssFilter : undefined);
+            if (hasFilter) imgEl.style.filter = 'none';
+            imgEl.src = pngDataUrl;
+            restored.push({ img: imgEl, originalSrc, originalFilter: hasFilter ? cssFilter : undefined });
           } catch { /* keep original */ }
         }
       }
@@ -138,8 +142,8 @@ export class CertificateView {
     });
   }
 
-  /** Draw an already-loaded <img> element onto a canvas and return as PNG data URL */
-  private drawImgElToDataUrl(imgEl: HTMLImageElement): Promise<string> {
+  /** Draw an already-loaded <img> element onto a canvas, optionally applying a CSS filter */
+  private drawImgElToDataUrl(imgEl: HTMLImageElement, filter?: string): Promise<string> {
     return new Promise((resolve, reject) => {
       const w = (imgEl.naturalWidth || imgEl.clientWidth || 260) * 2;
       const h = (imgEl.naturalHeight || imgEl.clientHeight || 80) * 2;
@@ -148,6 +152,7 @@ export class CertificateView {
       canvas.height = h;
       const ctx = canvas.getContext('2d');
       if (!ctx) return reject('no context');
+      if (filter) ctx.filter = filter;
 
       if (imgEl.complete && imgEl.naturalWidth > 0) {
         ctx.drawImage(imgEl, 0, 0, w, h);
@@ -157,12 +162,34 @@ export class CertificateView {
         tmp.onload = () => {
           canvas.width = (tmp.naturalWidth || w);
           canvas.height = (tmp.naturalHeight || h);
+          if (filter) ctx.filter = filter;
           ctx.drawImage(tmp, 0, 0, canvas.width, canvas.height);
           resolve(canvas.toDataURL('image/png'));
         };
         tmp.onerror = reject;
         tmp.src = imgEl.src;
       }
+    });
+  }
+
+  /** Load a data URL into a canvas with a CSS filter applied */
+  private drawDataUrlWithFilter(dataUrl: string, refEl: HTMLImageElement, filter: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const tmp = new Image();
+      tmp.onload = () => {
+        const w = (tmp.naturalWidth || refEl.clientWidth || 260) * 2;
+        const h = (tmp.naturalHeight || refEl.clientHeight || 80) * 2;
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return reject('no context');
+        ctx.filter = filter;
+        ctx.drawImage(tmp, 0, 0, w, h);
+        resolve(canvas.toDataURL('image/png'));
+      };
+      tmp.onerror = reject;
+      tmp.src = dataUrl;
     });
   }
 
@@ -188,7 +215,7 @@ export class CertificateView {
     });
 
     // Restore original SVG sources
-    for (const r of restored) r.img.src = r.originalSrc;
+    for (const r of restored) { r.img.src = r.originalSrc; if (r.originalFilter) r.img.style.filter = ''; }
     element.style.minHeight = original;
 
     const imgData = canvas.toDataURL('image/jpeg', 0.95);
@@ -222,7 +249,7 @@ export class CertificateView {
     });
 
     // Restore original SVG sources
-    for (const r of restored) r.img.src = r.originalSrc;
+    for (const r of restored) { r.img.src = r.originalSrc; if (r.originalFilter) r.img.style.filter = ''; }
     element.style.minHeight = original;
 
     canvas.toBlob((blob) => {
