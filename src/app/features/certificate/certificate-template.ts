@@ -16,16 +16,13 @@ const SIGNATURE_DATA_URI = `data:image/svg+xml,${SIGNATURE_SVG}`;
 
       <!-- HEADER -->
       <div class="header">
-        <div class="header-top">
-          <div class="header-brand">
-            <img src="/Honda_Logo.svg.png" alt="Honda" class="header-logo" />
+        <div class="header-banner-full">
+          <div class="banner-red-full">
+            <img src="/images/logo-honda.webp" alt="Honda" class="banner-logo" />
+            <span class="banner-text">Come ride with us</span>
           </div>
-          <div class="header-info">
-            <span class="header-city">HONDA BOGOTÁ</span>
-            <span class="header-slogan">Come ride with us</span>
-          </div>
+          <div class="banner-blue-full"></div>
         </div>
-        <div class="header-stripe"></div>
       </div>
 
       <!-- TITLE -->
@@ -62,14 +59,14 @@ const SIGNATURE_DATA_URI = `data:image/svg+xml,${SIGNATURE_SVG}`;
 
       <!-- FOOTER -->
       <div class="footer">
-        <div class="footer-line"></div>
-        <p class="footer-text">
-          *Importante: este certificado solo hace referencia a los productos mencionados anteriormente.
-        </p>
-        <div class="footer-bottom">
-          <span class="footer-address">Av. 1 de Mayo #29-62, Antonio Nariño, Bogotá</span>
-          <span class="footer-dot">&bull;</span>
-          <span class="footer-phone">Tel: 315 992 3447</span>
+        <div class="footer-content">
+          <img src="/images/image-removebg-preview.png" alt="GSM Grupo Supermotos" class="footer-gsm-logo" />
+          <div class="footer-right">
+            <div class="footer-line"></div>
+            <p class="footer-text">
+              *Importante: este certificado solo hace referencia a los productos mencionados anteriormente.
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -108,43 +105,40 @@ const SIGNATURE_DATA_URI = `data:image/svg+xml,${SIGNATURE_SVG}`;
 
     /* ===== HEADER ===== */
     .header { flex-shrink: 0; z-index: 1; }
-    .header-top {
+    .header-banner-full {
+      display: flex;
+      align-items: stretch;
+      height: 56px;
+      width: 100%;
+    }
+    .banner-red-full {
       background: #D5150D;
-      padding: 20px 56px;
+      flex: 1;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+      gap: 16px;
+      padding: 0 24px;
     }
-    .header-brand { display: flex; align-items: center; }
-    .header-logo {
-      height: 44px;
+    .banner-logo {
+      height: 46px;
       width: auto;
       filter: brightness(0) invert(1);
     }
-    .header-info {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-    }
-    .header-city {
-      font-family: 'Oxanium', sans-serif;
-      font-size: 22px;
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
-    .header-slogan {
-      font-size: 12px;
+    .banner-text {
+      font-size: 20px;
       font-style: italic;
-      color: rgba(255,255,255,0.8);
-      font-weight: 400;
+      color: #fff;
+      font-weight: 500;
       letter-spacing: 0.5px;
-      margin-top: 2px;
+      white-space: nowrap;
     }
-    .header-stripe {
-      height: 6px;
-      background: linear-gradient(90deg, #222 0%, #222 50%, #D5150D 50%, #D5150D 100%);
+    .banner-blue-full {
+      background: #003366;
+      width: 140px;
+      flex-shrink: 0;
+      clip-path: polygon(20px 0, 100% 0, 100% 100%, 0 100%);
+      margin-left: -20px;
     }
 
     /* ===== TITLE ===== */
@@ -240,14 +234,27 @@ const SIGNATURE_DATA_URI = `data:image/svg+xml,${SIGNATURE_SVG}`;
     /* ===== FOOTER ===== */
     .footer {
       flex-shrink: 0;
-      padding: 20px 56px 24px;
+      padding: 16px 56px 24px;
       z-index: 1;
       position: relative;
     }
+    .footer-content {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .footer-gsm-logo {
+      width: 90px;
+      height: auto;
+      flex-shrink: 0;
+    }
+    .footer-right {
+      flex: 1;
+    }
     .footer-line {
       height: 2px;
-      background: linear-gradient(90deg, #D5150D, #222);
-      margin-bottom: 12px;
+      background: #999;
+      margin-bottom: 10px;
     }
     .footer-text {
       font-size: 11px;
@@ -255,22 +262,6 @@ const SIGNATURE_DATA_URI = `data:image/svg+xml,${SIGNATURE_SVG}`;
       color: #777;
       text-align: center;
       line-height: 1.5;
-      margin-bottom: 6px;
-    }
-    .footer-bottom {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 12px;
-    }
-    .footer-address, .footer-phone {
-      font-size: 11px;
-      color: #888;
-      font-weight: 500;
-    }
-    .footer-dot {
-      color: #D5150D;
-      font-size: 14px;
     }
   `,
 })
