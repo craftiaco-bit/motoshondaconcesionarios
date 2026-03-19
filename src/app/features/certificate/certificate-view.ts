@@ -88,6 +88,45 @@ export class CertificateView {
     return container.querySelector('.cert-page') ?? container;
   }
 
+  /** Convert ALL images to inline data URLs so html2canvas can render them reliably */
+  private async inlineAllImages(container: HTMLElement): Promise<Array<{ img: HTMLImageElement; originalSrc: string }>> {
+    const allImages = Array.from(container.querySelectorAll('img'));
+    const restored: Array<{ img: HTMLImageElement; originalSrc: string }> = [];
+
+    for (const img of allImages) {
+      const originalSrc = img.src;
+      try {
+        const w = (img.naturalWidth || img.clientWidth || 260) * 2;
+        const h = (img.naturalHeight || img.clientHeight || 80) * 2;
+        const pngDataUrl = await this.imgToDataUrl(img.src, w, h);
+        img.src = pngDataUrl;
+        restored.push({ img, originalSrc });
+      } catch {
+        // keep original if conversion fails
+      }
+    }
+
+    return restored;
+  }
+
+  private imgToDataUrl(src: string, width: number, height: number): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = width || img.naturalWidth || 520;
+        canvas.height = height || img.naturalHeight || 160;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return reject('no context');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL('image/png'));
+      };
+      img.onerror = reject;
+      img.src = src;
+    });
+  }
+
   async exportPDF() {
     if (!isPlatformBrowser(this.platformId)) return;
     const element = this.getElement();
@@ -95,6 +134,9 @@ export class CertificateView {
 
     const original = element.style.minHeight;
     element.style.minHeight = 'unset';
+
+    // Rasterize SVG signatures before capture
+    const restored = await this.inlineAllImages(element);
 
     const html2canvas = (await import('html2canvas-pro')).default;
     const { jsPDF } = await import('jspdf');
@@ -106,6 +148,8 @@ export class CertificateView {
       backgroundColor: '#f5f3f0',
     });
 
+    // Restore original SVG sources
+    for (const r of restored) r.img.src = r.originalSrc;
     element.style.minHeight = original;
 
     const imgData = canvas.toDataURL('image/jpeg', 0.95);
@@ -126,6 +170,9 @@ export class CertificateView {
     const original = element.style.minHeight;
     element.style.minHeight = 'unset';
 
+    // Rasterize SVG signatures before capture
+    const restored = await this.inlineAllImages(element);
+
     const html2canvas = (await import('html2canvas-pro')).default;
 
     const canvas = await html2canvas(element, {
@@ -133,9 +180,10 @@ export class CertificateView {
       useCORS: true,
       logging: false,
       backgroundColor: '#f5f3f0',
-      ignoreElements: (el: Element) => false,
     });
 
+    // Restore original SVG sources
+    for (const r of restored) r.img.src = r.originalSrc;
     element.style.minHeight = original;
 
     canvas.toBlob((blob) => {
