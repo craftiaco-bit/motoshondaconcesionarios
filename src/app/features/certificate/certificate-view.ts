@@ -93,37 +93,72 @@ export class CertificateView {
     const allImages = Array.from(container.querySelectorAll('img'));
     const restored: Array<{ img: HTMLImageElement; originalSrc: string }> = [];
 
-    for (const img of allImages) {
-      const originalSrc = img.src;
-      try {
-        const w = (img.naturalWidth || img.clientWidth || 260) * 2;
-        const h = (img.naturalHeight || img.clientHeight || 80) * 2;
-        const pngDataUrl = await this.imgToDataUrl(img.src, w, h);
-        img.src = pngDataUrl;
-        restored.push({ img, originalSrc });
-      } catch {
-        // keep original if conversion fails
+    for (const imgEl of allImages) {
+      const originalSrc = imgEl.src;
+      if (originalSrc.startsWith('data:')) {
+        // Already a data URL — draw it via canvas to ensure PNG rasterization
+        try {
+          const pngDataUrl = await this.drawImgElToDataUrl(imgEl);
+          imgEl.src = pngDataUrl;
+          restored.push({ img: imgEl, originalSrc });
+        } catch { /* keep original */ }
+      } else {
+        // Network/local image — fetch as blob and convert
+        try {
+          const pngDataUrl = await this.fetchAsDataUrl(originalSrc);
+          imgEl.src = pngDataUrl;
+          restored.push({ img: imgEl, originalSrc });
+        } catch {
+          // Fallback: try drawing from the already-loaded DOM element
+          try {
+            const pngDataUrl = await this.drawImgElToDataUrl(imgEl);
+            imgEl.src = pngDataUrl;
+            restored.push({ img: imgEl, originalSrc });
+          } catch { /* keep original */ }
+        }
       }
     }
 
     return restored;
   }
 
-  private imgToDataUrl(src: string, width: number, height: number): Promise<string> {
+  /** Fetch an image URL as a data URL via fetch+blob */
+  private async fetchAsDataUrl(url: string): Promise<string> {
+    const resp = await fetch(url);
+    const blob = await resp.blob();
     return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.crossOrigin = 'anonymous';
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = width || img.naturalWidth || 520;
-        canvas.height = height || img.naturalHeight || 160;
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return reject('no context');
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  /** Draw an already-loaded <img> element onto a canvas and return as PNG data URL */
+  private drawImgElToDataUrl(imgEl: HTMLImageElement): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const w = (imgEl.naturalWidth || imgEl.clientWidth || 260) * 2;
+      const h = (imgEl.naturalHeight || imgEl.clientHeight || 80) * 2;
+      const canvas = document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return reject('no context');
+
+      if (imgEl.complete && imgEl.naturalWidth > 0) {
+        ctx.drawImage(imgEl, 0, 0, w, h);
         resolve(canvas.toDataURL('image/png'));
-      };
-      img.onerror = reject;
-      img.src = src;
+      } else {
+        const tmp = new Image();
+        tmp.onload = () => {
+          canvas.width = (tmp.naturalWidth || w);
+          canvas.height = (tmp.naturalHeight || h);
+          ctx.drawImage(tmp, 0, 0, canvas.width, canvas.height);
+          resolve(canvas.toDataURL('image/png'));
+        };
+        tmp.onerror = reject;
+        tmp.src = imgEl.src;
+      }
     });
   }
 
