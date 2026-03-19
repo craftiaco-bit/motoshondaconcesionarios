@@ -103,7 +103,7 @@ export class CertificateView {
       scale: 2,
       useCORS: true,
       logging: false,
-      backgroundColor: '#f2f0ed',
+      backgroundColor: '#f5f3f0',
     });
 
     element.style.minHeight = original;
@@ -132,15 +132,23 @@ export class CertificateView {
       scale: 2,
       useCORS: true,
       logging: false,
-      backgroundColor: '#f2f0ed',
+      backgroundColor: '#f5f3f0',
+      ignoreElements: (el: Element) => false,
     });
 
     element.style.minHeight = original;
 
-    const link = document.createElement('a');
-    link.download = `certificado-cuenta-${this.certificate()?.personName?.replace(/\s+/g, '-') ?? 'honda'}.jpg`;
-    link.href = canvas.toDataURL('image/jpeg', 0.95);
-    link.click();
+    canvas.toBlob((blob) => {
+      if (!blob) return;
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.download = `certificado-cuenta-${this.certificate()?.personName?.replace(/\s+/g, '-') ?? 'honda'}.jpg`;
+      link.href = url;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }, 'image/jpeg', 0.95);
   }
 
   copyLink() {

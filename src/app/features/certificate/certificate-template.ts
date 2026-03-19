@@ -52,13 +52,7 @@ import { Certificate } from '../../core/models/certificate.model';
       <div class="signature">
         <!-- Digital signature SVG -->
         <svg class="sig-svg" viewBox="0 0 320 100" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <filter id="inkBleed" x="-2%" y="-2%" width="104%" height="104%">
-              <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="4" result="noise"/>
-              <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2" xChannelSelector="R" yChannelSelector="G"/>
-            </filter>
-          </defs>
-          <g filter="url(#inkBleed)" opacity="0.88">
+          <g opacity="0.85">
             <!-- Main stroke — initial capital with loop -->
             <path
               d="M32 68 C30 58, 28 42, 38 30 C48 18, 56 16, 58 28
