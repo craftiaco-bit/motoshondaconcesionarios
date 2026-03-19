@@ -5,7 +5,7 @@ import { Certificate } from '../../core/models/certificate.model';
   selector: 'app-certificate-template',
   template: `
     <div class="cert-page" id="certificate-render">
-      <!-- WATERMARK -->
+      <!-- WATERMARK centered -->
       <div class="watermark">
         <img src="/Honda_Logo.svg.png" alt="" />
       </div>
@@ -50,6 +50,35 @@ import { Certificate } from '../../core/models/certificate.model';
 
       <!-- SIGNATURE -->
       <div class="signature">
+        <!-- Digital signature SVG -->
+        <svg class="sig-svg" viewBox="0 0 300 80" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M40 55 C50 30, 65 20, 80 35 C90 45, 85 55, 75 50 C65 45, 70 30, 85 28
+               C100 26, 110 40, 120 38 C130 36, 125 25, 135 22
+               C145 19, 155 35, 160 30 C165 25, 158 20, 168 22
+               C178 24, 185 40, 195 35 C205 30, 200 20, 215 25
+               C225 28, 220 42, 230 38 C240 34, 245 28, 260 32"
+            fill="none"
+            stroke="#1a1a6e"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M130 18 C132 50, 140 60, 145 55"
+            fill="none"
+            stroke="#1a1a6e"
+            stroke-width="1.5"
+            stroke-linecap="round"
+          />
+          <path
+            d="M195 20 C198 48, 205 55, 210 50"
+            fill="none"
+            stroke="#1a1a6e"
+            stroke-width="1.5"
+            stroke-linecap="round"
+          />
+        </svg>
         <div class="sig-line"></div>
         <p class="sig-name">{{ data().signerName }}</p>
         <p class="sig-role"><em>{{ data().signerRole }}</em></p>
@@ -75,7 +104,7 @@ import { Certificate } from '../../core/models/certificate.model';
     }
     :host p { margin: 0; }
 
-    /* ===== PAGE — Letter landscape ===== */
+    /* ===== PAGE ===== */
     .cert-page {
       width: 1056px;
       height: 816px;
@@ -90,22 +119,19 @@ import { Certificate } from '../../core/models/certificate.model';
       overflow: hidden;
     }
 
-    /* ===== WATERMARK ===== */
+    /* ===== WATERMARK centered ===== */
     .watermark {
       position: absolute;
       top: 50%;
-      right: -30px;
-      transform: translateY(-50%);
+      left: 50%;
+      transform: translate(-50%, -50%);
       z-index: 0;
       pointer-events: none;
     }
-    .watermark img { width: 540px; height: auto; opacity: 0.04; }
+    .watermark img { width: 480px; height: auto; opacity: 0.05; }
 
     /* ===== HEADER ===== */
-    .header {
-      flex-shrink: 0;
-      z-index: 1;
-    }
+    .header { flex-shrink: 0; z-index: 1; }
     .header-top {
       background: #D5150D;
       padding: 20px 56px;
@@ -113,10 +139,7 @@ import { Certificate } from '../../core/models/certificate.model';
       align-items: center;
       justify-content: space-between;
     }
-    .header-brand {
-      display: flex;
-      align-items: center;
-    }
+    .header-brand { display: flex; align-items: center; }
     .header-logo {
       height: 44px;
       width: auto;
@@ -194,7 +217,7 @@ import { Certificate } from '../../core/models/certificate.model';
     }
 
     .account-block {
-      padding-left: 56px;
+      text-align: center;
     }
     .account-line {
       font-size: 22px;
@@ -210,9 +233,15 @@ import { Certificate } from '../../core/models/certificate.model';
     /* ===== SIGNATURE ===== */
     .signature {
       text-align: center;
-      padding: 32px 0 0;
+      padding: 24px 0 0;
       z-index: 1;
       position: relative;
+    }
+    .sig-svg {
+      width: 220px;
+      height: 60px;
+      display: block;
+      margin: 0 auto -6px;
     }
     .sig-line {
       width: 300px;
