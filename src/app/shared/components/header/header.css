@@ -1,4 +1,4 @@
-:host { display: block; }
+:host { display: block; position: relative; z-index: 100; }
 
 /* ================================================================
    ROW 1: TOP BAR — black bg, centered content
@@ -223,33 +223,187 @@
 }
 
 /* ================================================================
-   MOBILE MENU
+   MOBILE OVERLAY — fullscreen dark backdrop
    ================================================================ */
-.mobile-menu {
-  background-color: #FFFFFF;
-  border-top: 1px solid #A4A4A440;
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
+.mobile-overlay--open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ================================================================
+   MOBILE MENU — slide-in drawer from left
+   ================================================================ */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 300px;
+  max-width: 85vw;
+  background-color: #FFFFFF;
+  z-index: 999;
+  transform: translateX(-100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+  overflow-y: auto;
+}
+
+.mobile-menu--open {
+  transform: translateX(0);
+}
+
+/* Menu header with logo + close */
+.mobile-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid #EEEEEE;
+}
+
+.mobile-menu-logo {
+  height: 50px;
+  width: auto;
+}
+
+.mobile-menu-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.mobile-menu-close:hover {
+  background-color: #F5F5F5;
+}
+
+.mobile-menu-close-icon {
+  width: 20px;
+  height: 20px;
+  fill: #666666;
+}
+
+/* Navigation links list */
 .mobile-menu-list {
   list-style: none;
   margin: 0;
-  padding: 16px 20px;
+  padding: 8px 0;
+  flex: 1;
 }
 
 .mobile-nav-link {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 14px;
   font-family: 'Poppins', sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  color: #222222;
-  padding: 10px 0;
-  transition: color 0.3s, background-color 0.3s;
+  font-size: 15px;
+  font-weight: 500;
+  color: #333333;
+  padding: 14px 24px;
+  transition: color 0.2s, background-color 0.2s;
+  border-left: 3px solid transparent;
 }
 
-.mobile-nav-link:hover,
+.mobile-nav-link:hover {
+  color: #D5150D;
+  background-color: #FEF2F2;
+  border-left-color: #D5150D;
+}
+
 .mobile-nav-link.nav-active {
   color: #D5150D;
-  background-color: #D5150D10;
+  background-color: #FEF2F2;
+  border-left-color: #D5150D;
+  font-weight: 600;
+}
+
+.mobile-nav-icon {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+/* Menu footer with contact info */
+.mobile-menu-footer {
+  padding: 16px 24px 24px;
+  border-top: 1px solid #EEEEEE;
+}
+
+.mobile-menu-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  background-color: #D5150D;
+  color: #FFFFFF;
+  font-family: 'Oxanium', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 14px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.mobile-menu-cta:hover {
+  background-color: #B01009;
+  color: #FFFFFF;
+}
+
+.mobile-menu-cta-icon {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.mobile-menu-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.mobile-menu-contact-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  color: #666666;
+  transition: color 0.2s;
+}
+
+.mobile-menu-contact-link:hover {
+  color: #D5150D;
+}
+
+.mobile-menu-contact-icon {
+  width: 14px;
+  height: 14px;
+  fill: #D5150D;
+  flex-shrink: 0;
 }
 
 /* ================================================================
@@ -272,6 +426,6 @@
    ================================================================ */
 @media (max-width: 767px) {
   .logobar { padding: 10px 16px; }
-  .logo-img { height: 40px; }
+  .logo-img { height: 60px; }
   .mobile-search { padding: 8px 16px; }
 }
