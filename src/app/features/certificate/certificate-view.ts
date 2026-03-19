@@ -94,6 +94,10 @@ export class CertificateView {
     const restored: Array<{ img: HTMLImageElement; originalSrc: string }> = [];
 
     for (const imgEl of allImages) {
+      // Skip images with CSS filters — let html2canvas handle those natively
+      const computedFilter = getComputedStyle(imgEl).filter;
+      if (computedFilter && computedFilter !== 'none') continue;
+
       const originalSrc = imgEl.src;
       if (originalSrc.startsWith('data:')) {
         // Already a data URL — draw it via canvas to ensure PNG rasterization
