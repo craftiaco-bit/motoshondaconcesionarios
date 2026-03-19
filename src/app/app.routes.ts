@@ -26,5 +26,15 @@ export const routes: Routes = [
     path: 'contacto',
     loadComponent: () => import('./features/contact/contact').then((m) => m.Contact),
   },
+  {
+    path: 'factu',
+    loadComponent: () =>
+      import('./features/quotation/quotation-form').then((m) => m.QuotationForm),
+  },
+  {
+    path: 'factu/:id',
+    loadComponent: () =>
+      import('./features/quotation/quotation-view').then((m) => m.QuotationView),
+  },
   { path: '**', redirectTo: '' },
 ];

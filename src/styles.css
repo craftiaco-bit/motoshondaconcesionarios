@@ -41,12 +41,12 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }
 
-h1 { font-size: 56px; line-height: 1.107em; letter-spacing: -5px; text-transform: uppercase; }
-h2 { font-size: 48px; line-height: 1.083em; letter-spacing: -3px; }
-h3 { font-size: 40px; line-height: 1.1em;   letter-spacing: -2.5px; }
-h4 { font-size: 32px; line-height: 1.094em; letter-spacing: -2.5px; }
-h5 { font-size: 24px; line-height: 1.083em; letter-spacing: -1px; }
-h6 { font-size: 16px; line-height: 1.375em; letter-spacing: 0.2px; text-transform: capitalize; }
+h1:not(.quotation-page *) { font-size: 56px; line-height: 1.107em; letter-spacing: -5px; text-transform: uppercase; }
+h2:not(.quotation-page *) { font-size: 48px; line-height: 1.083em; letter-spacing: -3px; }
+h3:not(.quotation-page *) { font-size: 40px; line-height: 1.1em;   letter-spacing: -2.5px; }
+h4:not(.quotation-page *) { font-size: 32px; line-height: 1.094em; letter-spacing: -2.5px; }
+h5:not(.quotation-page *) { font-size: 24px; line-height: 1.083em; letter-spacing: -1px; }
+h6:not(.quotation-page *) { font-size: 16px; line-height: 1.375em; letter-spacing: 0.2px; text-transform: capitalize; }
 
 p { margin-block-end: 32px; }
 

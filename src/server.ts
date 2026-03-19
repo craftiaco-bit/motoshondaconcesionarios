@@ -48,7 +48,7 @@ app.get('/api/products/:slug', (req, res) => {
 /**
  * Serve Google verification files explicitly (before SSR intercepts them)
  */
-app.get('/google*.html', (req, res, next) => {
+app.get('/google:code.html', (req, res, next) => {
   const filePath = join(browserDistFolder, req.path);
   if (existsSync(filePath)) {
     res.type('text/html').sendFile(filePath);
