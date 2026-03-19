@@ -36,5 +36,15 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/quotation/quotation-view').then((m) => m.QuotationView),
   },
+  {
+    path: 'certi',
+    loadComponent: () =>
+      import('./features/certificate/certificate-form').then((m) => m.CertificateForm),
+  },
+  {
+    path: 'certi/:id',
+    loadComponent: () =>
+      import('./features/certificate/certificate-view').then((m) => m.CertificateView),
+  },
   { path: '**', redirectTo: '' },
 ];
