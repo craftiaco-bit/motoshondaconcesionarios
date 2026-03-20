@@ -29,6 +29,11 @@ export class CertificateService {
     return certificate;
   }
 
+  delete(id: string): void {
+    this.certificates.set(this.certificates().filter((c) => c.id !== id));
+    this.persistToStorage();
+  }
+
   generateId(): string {
     return Date.now().toString(36) + Math.random().toString(36).substring(2, 7);
   }

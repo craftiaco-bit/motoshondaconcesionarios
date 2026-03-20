@@ -1,3 +1,7 @@
-<app-main-layout>
+@if (showLayout()) {
+  <app-main-layout>
+    <router-outlet />
+  </app-main-layout>
+} @else {
   <router-outlet />
-</app-main-layout>
+}

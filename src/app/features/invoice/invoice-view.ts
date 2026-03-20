@@ -3,24 +3,22 @@ import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
-import { QuotationService } from '../../core/services/quotation.service';
-import { QuotationTemplate } from './quotation-template';
-import { Quotation } from '../../core/models';
-import { getProductQuotationProfile } from '../../core/data/product-quotation-data';
+import { InvoiceService } from '../../core/services/invoice.service';
+import { InvoiceTemplate } from './invoice-template';
 
 @Component({
-  selector: 'app-quotation-view',
-  imports: [QuotationTemplate, RouterLink],
+  selector: 'app-invoice-view',
+  imports: [InvoiceTemplate, RouterLink],
   template: `
-    @if (quotation()) {
+    @if (invoice()) {
       <!-- Action Bar -->
       <div class="bg-white border-b shadow-sm sticky top-0 z-50 print:hidden">
         <div class="max-w-[850px] mx-auto flex items-center justify-between px-4 py-3">
-          <a routerLink="/factu" class="text-sm text-gray-600 hover:text-[#D5150D] flex items-center gap-1">
+          <a routerLink="/invoice" class="text-sm text-gray-600 hover:text-[#D5150D] flex items-center gap-1">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M19 12H5M12 19l-7-7 7-7"/>
             </svg>
-            Nueva cotización
+            Nueva factura
           </a>
           <div class="flex gap-2">
             <button
@@ -48,29 +46,26 @@ import { getProductQuotationProfile } from '../../core/data/product-quotation-da
       <!-- Template -->
       <div class="bg-gray-100 py-8 print:bg-white print:py-0">
         <div #templateContainer>
-          <app-quotation-template [data]="quotation()!" />
+          <app-invoice-template [data]="invoice()!" />
         </div>
       </div>
     } @else {
       <div class="min-h-screen flex items-center justify-center bg-gray-100">
         <div class="text-center">
           <h2 class="font-[Oxanium] text-2xl font-bold text-gray-400 mb-4">
-            Cotización no encontrada
+            Factura no encontrada
           </h2>
-          <a
-            routerLink="/factu"
-            class="text-[#D5150D] font-semibold hover:underline"
-          >
-            Crear nueva cotización
+          <a routerLink="/invoice" class="text-[#D5150D] font-semibold hover:underline">
+            Crear nueva factura
           </a>
         </div>
       </div>
     }
   `,
 })
-export class QuotationView {
+export class InvoiceView {
   private readonly route = inject(ActivatedRoute);
-  private readonly quotationService = inject(QuotationService);
+  private readonly invoiceService = inject(InvoiceService);
   private readonly platformId = inject(PLATFORM_ID);
 
   readonly templateContainer = viewChild<ElementRef>('templateContainer');
@@ -79,47 +74,26 @@ export class QuotationView {
     this.route.paramMap.pipe(map((params) => params.get('id') ?? ''))
   );
 
-  readonly quotation = computed(() => {
+  readonly invoice = computed(() => {
     const id = this.routeId();
     if (!id) return null;
-    const q = this.quotationService.getById(id)();
-    if (!q) return null;
-    return this.enrichQuotation(q);
+    return this.invoiceService.getById(id)();
   });
-
-  /** Enrich old quotations that lack benefits/features/colors with profile data */
-  private enrichQuotation(q: Quotation): Quotation {
-    if (q.benefits?.length && q.features?.length && q.accentColor) return q;
-    const profile = getProductQuotationProfile(q.productSlug);
-    return {
-      ...q,
-      paymentType: q.paymentType || 'contado',
-      benefits: q.benefits?.length ? q.benefits : profile.benefits,
-      features: q.features?.length ? q.features : profile.features,
-      accentColor: q.accentColor || profile.accentColor,
-      accentDark: q.accentDark || profile.accentDark,
-      category: q.category || profile.category,
-      specifications: Object.keys(q.specifications || {}).length > 2
-        ? q.specifications
-        : profile.specifications,
-    };
-  }
 
   linkCopied = false;
 
-  private getQuotationElement(): HTMLElement | null {
+  private getInvoiceElement(): HTMLElement | null {
     const container = this.templateContainer()?.nativeElement as HTMLElement;
     if (!container) return null;
-    return container.querySelector('.quotation-page') ?? container;
+    return container.querySelector('.invoice-page') ?? container;
   }
 
   async exportPDF() {
     if (!isPlatformBrowser(this.platformId)) return;
 
-    const element = this.getQuotationElement();
+    const element = this.getInvoiceElement();
     if (!element) return;
 
-    // Temporarily remove min-height so canvas fits content exactly
     const original = element.style.minHeight;
     element.style.minHeight = 'unset';
 
@@ -136,22 +110,20 @@ export class QuotationView {
     element.style.minHeight = original;
 
     const imgData = canvas.toDataURL('image/jpeg', 0.95);
-    const imgWidth = 210; // A4 width in mm
+    const imgWidth = 210;
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-    // Use custom page size matching content proportions
     const pdf = new jsPDF('p', 'mm', [imgWidth, imgHeight]);
     pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight);
-    pdf.save(`cotizacion-${this.quotation()?.number ?? 'honda'}.pdf`);
+    pdf.save(`factura-${this.invoice()?.number ?? 'honda'}.pdf`);
   }
 
   async exportJPG() {
     if (!isPlatformBrowser(this.platformId)) return;
 
-    const element = this.getQuotationElement();
+    const element = this.getInvoiceElement();
     if (!element) return;
 
-    // Temporarily remove min-height so canvas fits content exactly
     const original = element.style.minHeight;
     element.style.minHeight = 'unset';
 
@@ -167,7 +139,7 @@ export class QuotationView {
     element.style.minHeight = original;
 
     const link = document.createElement('a');
-    link.download = `cotizacion-${this.quotation()?.number ?? 'honda'}.jpg`;
+    link.download = `factura-${this.invoice()?.number ?? 'honda'}.jpg`;
     link.href = canvas.toDataURL('image/jpeg', 0.95);
     link.click();
   }

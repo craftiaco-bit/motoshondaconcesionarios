@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { ProductService } from '../../core/services/product.service';
 import { SiteConfigService } from '../../core/services/site-config.service';
 import { QuotationService } from '../../core/services/quotation.service';
-import { Quotation } from '../../core/models';
+import { Quotation, QuotationPaymentType } from '../../core/models';
 import { CurrencyCopPipe } from '../../shared/pipes/currency-cop.pipe';
 import { getProductQuotationProfile } from '../../core/data/product-quotation-data';
 
@@ -46,6 +46,31 @@ interface QuotationFormData {
         </div>
 
         <div class="bg-white rounded-b-lg shadow-lg p-6 space-y-6">
+          <!-- Payment Type -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Tipo de Factura</label>
+            <div class="flex gap-4">
+              <button
+                class="flex-1 py-3 px-4 rounded-lg font-[Oxanium] font-bold text-lg uppercase tracking-wide border-2 transition-all cursor-pointer"
+                [style.background]="paymentType() === 'contado' ? '#D5150D' : '#fff'"
+                [style.color]="paymentType() === 'contado' ? '#fff' : '#555'"
+                [style.border-color]="paymentType() === 'contado' ? '#D5150D' : '#d1d5db'"
+                (click)="paymentType.set('contado')"
+              >
+                Contado
+              </button>
+              <button
+                class="flex-1 py-3 px-4 rounded-lg font-[Oxanium] font-bold text-lg uppercase tracking-wide border-2 transition-all cursor-pointer"
+                [style.background]="paymentType() === 'credito' ? '#006D77' : '#fff'"
+                [style.color]="paymentType() === 'credito' ? '#fff' : '#555'"
+                [style.border-color]="paymentType() === 'credito' ? '#006D77' : '#d1d5db'"
+                (click)="paymentType.set('credito')"
+              >
+                Crédito / Financiación
+              </button>
+            </div>
+          </div>
+
           <!-- Product Selection -->
           <div>
             <label class="block text-sm font-semibold text-gray-700 mb-2">Seleccionar Moto</label>
@@ -278,6 +303,7 @@ export class QuotationForm {
   private readonly platformId = inject(PLATFORM_ID);
 
   readonly products = this.productService.products;
+  readonly paymentType = signal<QuotationPaymentType>('contado');
   readonly selectedSlug = signal('');
 
   readonly selectedProduct = computed(() => {
@@ -336,6 +362,7 @@ export class QuotationForm {
     const quotation: Quotation = {
       id: this.quotationService.generateId(),
       number: this.quotationService.generateNumber(),
+      paymentType: this.paymentType(),
       date: this.form.date,
       validUntil: this.form.validUntil,
       clientName: this.form.clientName,

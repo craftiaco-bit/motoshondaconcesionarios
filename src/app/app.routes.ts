@@ -42,9 +42,29 @@ export const routes: Routes = [
       import('./features/certificate/certificate-form').then((m) => m.CertificateForm),
   },
   {
+    path: 'certi/edit',
+    loadComponent: () =>
+      import('./features/certificate/certificate-edit').then((m) => m.CertificateEdit),
+  },
+  {
     path: 'certi/:id',
     loadComponent: () =>
       import('./features/certificate/certificate-view').then((m) => m.CertificateView),
+  },
+  {
+    path: 'invoice',
+    loadComponent: () =>
+      import('./features/invoice/invoice-form').then((m) => m.InvoiceForm),
+  },
+  {
+    path: 'invoice/edit',
+    loadComponent: () =>
+      import('./features/invoice/invoice-edit').then((m) => m.InvoiceEdit),
+  },
+  {
+    path: 'invoice/:id',
+    loadComponent: () =>
+      import('./features/invoice/invoice-view').then((m) => m.InvoiceView),
   },
   { path: '**', redirectTo: '' },
 ];

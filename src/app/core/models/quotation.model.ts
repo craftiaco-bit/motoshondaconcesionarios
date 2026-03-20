@@ -1,3 +1,5 @@
+export type QuotationPaymentType = 'contado' | 'credito';
+
 export interface QuotationFeature {
   icon: string;
   label: string;
@@ -6,6 +8,7 @@ export interface QuotationFeature {
 export interface Quotation {
   id: string;
   number: string;
+  paymentType: QuotationPaymentType;
   date: string;
   validUntil: string;
   clientName: string;

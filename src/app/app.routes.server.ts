@@ -18,7 +18,23 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Client,
   },
   {
+    path: 'certi/edit',
+    renderMode: RenderMode.Client,
+  },
+  {
     path: 'certi/:id',
+    renderMode: RenderMode.Client,
+  },
+  {
+    path: 'invoice',
+    renderMode: RenderMode.Client,
+  },
+  {
+    path: 'invoice/edit',
+    renderMode: RenderMode.Client,
+  },
+  {
+    path: 'invoice/:id',
     renderMode: RenderMode.Client,
   },
   {

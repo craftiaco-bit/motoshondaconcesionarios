@@ -22,7 +22,7 @@ import { CurrencyCopPipe } from '../../shared/pipes/currency-cop.pipe';
       <!-- HEADER ROW: title + stripes + logo -->
       <div class="header">
         <div class="header-accent">
-          <span class="header-title">COTIZACIÓN</span>
+          <span class="header-title">{{ data().paymentType === 'credito' ? 'COTIZACIÓN — CRÉDITO' : 'COTIZACIÓN — CONTADO' }}</span>
         </div>
         <div class="header-stripes">
           <span class="stripe"></span>
