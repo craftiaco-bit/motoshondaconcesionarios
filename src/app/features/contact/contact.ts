@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { SiteConfigService } from '../../core/services/site-config.service';
+import { SeoService } from '../../core/services/seo.service';
 
 @Component({
   selector: 'app-contact',
@@ -11,6 +12,15 @@ import { SiteConfigService } from '../../core/services/site-config.service';
 })
 export class Contact {
   protected readonly site = inject(SiteConfigService);
+  private readonly seo = inject(SeoService);
+
+  constructor() {
+    this.seo.updateMetaTags({
+      title: 'Contacto - Concesionario Honda Bogotá',
+      description: 'Contacta al concesionario Honda en Bogotá. WhatsApp, teléfono, correo y dirección. Av. 1 de Mayo #29-62, Antonio Nariño.',
+      url: 'https://www.motoshondaconcesionarios.com/contacto',
+    });
+  }
 
   protected readonly formData = signal({
     name: '',

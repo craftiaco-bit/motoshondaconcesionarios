@@ -1,10 +1,11 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, inject, signal, computed, effect } from '@angular/core';
 import { KeyValuePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { ProductService } from '../../core/services/product.service';
 import { SiteConfigService } from '../../core/services/site-config.service';
+import { SeoService } from '../../core/services/seo.service';
 import { ImageGallery } from '../../shared/components/image-gallery/image-gallery';
 import { ProductCard } from '../../shared/components/product-card/product-card';
 import { Breadcrumb } from '../../shared/components/breadcrumb/breadcrumb';
@@ -20,6 +21,7 @@ export class ProductDetail {
   private readonly route = inject(ActivatedRoute);
   private readonly productService = inject(ProductService);
   protected readonly site = inject(SiteConfigService);
+  private readonly seo = inject(SeoService);
 
   protected readonly slug = toSignal(
     this.route.paramMap.pipe(map((params) => params.get('slug') ?? '')),
@@ -40,6 +42,19 @@ export class ProductDetail {
     const p = this.product();
     if (!p) return { subtitle: '', body: '' };
     return ProductService.parseDescription(p.description);
+  });
+
+  private readonly seoEffect = effect(() => {
+    const product = this.product();
+    if (product) {
+      this.seo.updateMetaTags({
+        title: `Honda ${product.name} - Precio y Ficha Técnica`,
+        description: `Compra tu Honda ${product.name} en Bogotá. ${product.description?.substring(0, 120)}. Financiación disponible.`,
+        url: `https://www.motoshondaconcesionarios.com/product/${product.slug}`,
+        image: product.images?.[0],
+        type: 'product',
+      });
+    }
   });
 
   protected readonly activeTab = signal<'description' | 'specs'>('description');

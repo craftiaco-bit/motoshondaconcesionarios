@@ -12,6 +12,32 @@
     <priority>1.0</priority>
   </url>
   
+  <!-- Navigation Pages -->
+  <url>
+    <loc>https://www.motoshondaconcesionarios.com/shop</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.motoshondaconcesionarios.com/concesionarios-honda</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.motoshondaconcesionarios.com/servicios</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.motoshondaconcesionarios.com/contacto</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- Product Pages -->
   <url>
     <loc>https://www.motoshondaconcesionarios.com/product/honda-africa-twin</loc>

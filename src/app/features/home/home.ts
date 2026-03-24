@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { ProductService } from '../../core/services/product.service';
 import { DealerService } from '../../core/services/dealer.service';
 import { SiteConfigService } from '../../core/services/site-config.service';
+import { SeoService } from '../../core/services/seo.service';
 @Component({
   selector: 'app-home',
   imports: [RouterLink],
@@ -15,6 +16,7 @@ export class Home implements OnInit, OnDestroy {
   protected readonly dealerService = inject(DealerService);
   protected readonly site = inject(SiteConfigService);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly seo = inject(SeoService);
 
   protected readonly featured = this.productService.featured;
   protected readonly dealers = this.dealerService.dealers;
@@ -70,6 +72,11 @@ export class Home implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.seo.updateMetaTags({
+      title: 'Motos Honda Bogotá - Financiación Sin Reporte',
+      description: 'Concesionario Honda oficial en Bogotá. Motos Honda nuevas con financiación sin reporte. CB 190, Wave 110, NX 190, Navi y más. Los mejores precios.',
+      url: 'https://www.motoshondaconcesionarios.com/',
+    });
     this.startInterval();
   }
 
