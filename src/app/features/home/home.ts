@@ -38,7 +38,7 @@ export class Home implements OnInit, OnDestroy {
   ]);
 
   protected whatsappUrl(message: string): string {
-    return `https://api.whatsapp.com/send?phone=573159923447&text=${encodeURIComponent(message)}`;
+    return `https://api.whatsapp.com/send?phone=573222588285&text=${encodeURIComponent(message)}`;
   }
 
   protected prevSlide(): void {
@@ -73,8 +73,8 @@ export class Home implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.seo.updateMetaTags({
-      title: 'Motos Honda Bogotá - Financiación Sin Reporte',
-      description: 'Concesionario Honda oficial en Bogotá. Motos Honda nuevas con financiación sin reporte. CB 190, Wave 110, NX 190, Navi y más. Los mejores precios.',
+      title: 'Motos Honda Bogotá - Concesionario Oficial | Financiación y Entrega Inmediata',
+      description: 'Concesionario Honda oficial en Bogotá. 20+ modelos de motos Honda 2026 con financiación sin codeudor. Llamá gratis al 01800. Test ride disponible.',
       url: 'https://www.motoshondaconcesionarios.com/',
     });
     this.startInterval();

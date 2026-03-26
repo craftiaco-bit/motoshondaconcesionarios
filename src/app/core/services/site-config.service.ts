@@ -8,9 +8,9 @@ export class SiteConfigService {
     description: 'Venta de motos Honda',
     language: 'es',
     currency: 'COP',
-    whatsapp: '573159923447',
+    whatsapp: '573222588285',
     whatsappMessage: 'Hola, estoy interesado en una moto',
-    phone: '3159923447',
+    phone: '3222588285',
     address: 'Av. 1 de Mayo #29-62, Antonio Nariño, Bogotá',
   });
 

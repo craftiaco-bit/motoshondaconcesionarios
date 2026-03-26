@@ -1,8 +1,8 @@
 import { Injectable, signal } from '@angular/core';
 import { Dealer } from '../models';
 
-const WHATSAPP = '573159923447';
-const PHONE = '3181269436';
+const WHATSAPP = '573222588285';
+const PHONE = '3222588285';
 
 @Injectable({ providedIn: 'root' })
 export class DealerService {
